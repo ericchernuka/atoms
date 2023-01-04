@@ -10,6 +10,7 @@ import {
   ReactNode,
   useEffect,
   useId,
+  useMemo,
   useState,
 } from "react";
 import { Input } from "../input/Input";
@@ -32,23 +33,38 @@ const DateOfBirthField = forwardRef<
     return isValidISO8601Date(value || "") ? value : undefined;
   });
 
+  const formatDate = (dateParts: string[]) => {
+    const [year, month, day] = dateParts;
+    const internalValue = `${year}-${month}-${day}`;
+    const persistedValue = `${year}-${month.padStart(2, "0")}-${day.padStart(
+      2,
+      "0"
+    )}`;
+    return {
+      value: internalValue,
+      persisted: persistedValue,
+      isValid: isValidISO8601Date(persistedValue),
+    };
+  };
+
+  const { persisted: formattedDate, isValid: isValidLocalDate } =
+    useMemo(() => {
+      return formatDate((localDate || "").split("-"));
+    }, [localDate]);
+
   useEffect(() => {
-    if (!focused && localDate !== value && isValidISO8601Date(value || "")) {
+    if (
+      !focused &&
+      isValidISO8601Date(value || "") &&
+      formattedDate !== value
+    ) {
+      console.log("syncing local date");
       setLocalDate(value);
     }
   }, [localDate, value, focused]);
 
   const dateParts = (localDate || "").split("-");
   const [yearPart = "", monthPart = "", dayPart = ""] = dateParts;
-
-  const formatDate = (dateParts: [string, string, string]) => {
-    const [year, month, day] = dateParts;
-    const formatted = `${year}-${month}-${day}`;
-    return {
-      value: formatted,
-      isValid: isValidISO8601Date(formatted),
-    };
-  };
 
   const replaceDatePart = (index: number, value: string) => {
     const updatedDateParts: [string, string, string] = [
@@ -61,19 +77,19 @@ const DateOfBirthField = forwardRef<
   };
 
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, isValid } = formatDate(
+    const { value, persisted, isValid } = formatDate(
       replaceDatePart(1, event.target.value)
     );
     setLocalDate(value);
-    onChange(isValid ? value : undefined);
+    onChange(isValid ? persisted : undefined);
   };
   const handleDayOrYear = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newIndex = event.target.name === "day" ? 2 : 0;
-    const { value, isValid } = formatDate(
+    const { value, persisted, isValid } = formatDate(
       replaceDatePart(newIndex, event.target.value)
     );
     setLocalDate(value);
-    onChange(isValid ? value : undefined);
+    onChange(isValid ? persisted : undefined);
   };
 
   return (
@@ -92,6 +108,7 @@ const DateOfBirthField = forwardRef<
             name="day"
             value={dayPart}
             onChange={handleDayOrYear}
+            hasErrors={!isValidLocalDate}
           />
         </FormGroupWithLabel>
 
@@ -103,7 +120,8 @@ const DateOfBirthField = forwardRef<
             onChange={handleMonthChange}
             className={clsx(
               "relative px-2 var-spacing-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm truncate",
-              "form-select"
+              "form-select",
+              !isValidLocalDate && "border-red-400"
             )}
           >
             <option value="" disabled>
@@ -131,6 +149,7 @@ const DateOfBirthField = forwardRef<
             name="year"
             value={yearPart}
             onChange={handleDayOrYear}
+            hasErrors={!isValidLocalDate}
           />
         </FormGroupWithLabel>
       </div>
