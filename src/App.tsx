@@ -12,6 +12,7 @@ import * as Collapsible from "./collapsible/Collapsible";
 import { Button } from "./button/Button";
 import { Stack } from "./stack/Stack";
 import { Card, CardItemRow } from "./card/Card";
+import { DateOfBirthField } from "./dob-field/dob-field";
 
 function App() {
   const [show, setShow] = useState(false);
@@ -19,8 +20,19 @@ function App() {
   const [expanded, setExpanded] = useState(false);
   const RightIcon = show ? EyeIcon : EyeSlashIcon;
 
+  const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
+
   return (
     <div className="space-y-8">
+      <div className="p-8">
+        <DateOfBirthField
+          onChange={(date) => setDobState(date)}
+          value={dobState}
+        />
+        <button type="button" onClick={() => setDobState("2021-06-12")}>
+          Set date
+        </button>
+      </div>
       <div className="p-8">
         <TextField.Root>
           <TextField.Slot>

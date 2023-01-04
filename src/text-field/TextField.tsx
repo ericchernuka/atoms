@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
+import { Input } from "../input/Input";
 
 /* -------------------------------------------------------------------------------------------------
  * Utils
@@ -143,10 +144,9 @@ interface TextFieldInputProps extends React.ComponentPropsWithoutRef<"input"> {}
 const TextFieldInput = forwardRef<TextFieldInputElement, TextFieldInputProps>(
   (props, forwardedRef) => {
     return (
-      <input
+      <Input
         type="text"
         {...props}
-        className="relative px-2 var-spacing-2 w-full form-input rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm truncate"
         style={{
           paddingLeft: "max(var(--spacing-2), var(--left-slot-width, 0px))",
           paddingRight: "max(var(--spacing-2), var(--right-slot-width, 0px))",
