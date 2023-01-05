@@ -148,8 +148,10 @@ const TextFieldInput = forwardRef<TextFieldInputElement, TextFieldInputProps>(
         type="text"
         {...props}
         style={{
-          paddingLeft: "max(var(--spacing-2), var(--left-slot-width, 0px))",
-          paddingRight: "max(var(--spacing-2), var(--right-slot-width, 0px))",
+          paddingLeft:
+            "max(var(--spacing-2, 0px), var(--left-slot-width, 0px))",
+          paddingRight:
+            "max(var(--spacing-2, 0px), var(--right-slot-width, 0px))",
         }}
         ref={forwardedRef}
       />
