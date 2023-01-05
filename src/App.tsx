@@ -5,7 +5,7 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { LoadingButton } from "./button/LoadingButton";
 import * as Dialog from "./dialog/Dialog";
 import * as Collapsible from "./collapsible/Collapsible";
@@ -13,6 +13,10 @@ import { Button } from "./button/Button";
 import { Stack } from "./stack/Stack";
 import { Card, CardItemRow } from "./card/Card";
 import { DateOfBirthField } from "./dob-field/dob-field";
+
+const SectionSpacer = (props: { children: ReactNode }) => (
+  <div className="p-8" {...props} />
+);
 
 function App() {
   const [show, setShow] = useState(false);
@@ -24,7 +28,7 @@ function App() {
 
   return (
     <div className="space-y-8">
-      <div className="p-8">
+      <SectionSpacer>
         <DateOfBirthField
           onChange={(date) => setDobState(date)}
           value={dobState}
@@ -32,8 +36,8 @@ function App() {
         <button type="button" onClick={() => setDobState("2021-06-12")}>
           Set date
         </button>
-      </div>
-      <div className="p-8">
+      </SectionSpacer>
+      <SectionSpacer>
         <TextField.Root>
           <TextField.Slot>
             <LockClosedIcon className="h-5 w-5 text-gray-400" />
@@ -53,10 +57,10 @@ function App() {
             </Button>
           </TextField.Slot>
         </TextField.Root>
-      </div>
+      </SectionSpacer>
 
       <Dialog.Dialog open={loading} onOpenChange={(open) => setLoading(open)}>
-        <div className="p-8">
+        <SectionSpacer>
           <Dialog.DialogTrigger asChild>
             <LoadingButton
               intent="primary-frida"
@@ -68,7 +72,7 @@ function App() {
               Checkout
             </LoadingButton>
           </Dialog.DialogTrigger>
-        </div>
+        </SectionSpacer>
 
         <Dialog.DialogContent open={loading}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
@@ -79,15 +83,15 @@ function App() {
         </Dialog.DialogContent>
       </Dialog.Dialog>
 
-      <div className="p-8">
+      <SectionSpacer>
         <Stack direction="row">
           <Button>Click</Button>
           <Button intent="primary-frida">Me</Button>
           <Button intent="secondary">Or Me?</Button>
         </Stack>
-      </div>
+      </SectionSpacer>
 
-      <div className="p-8">
+      <SectionSpacer>
         <Collapsible.Root>
           <Collapsible.Trigger asChild>
             <Button intent="primary-frida">Expand me</Button>
@@ -102,9 +106,9 @@ function App() {
             klasjdflkasjdfla lkasd falksdf j
           </Collapsible.Content>
         </Collapsible.Root>
-      </div>
+      </SectionSpacer>
 
-      <div className="p-8">
+      <SectionSpacer>
         <Card>
           <CardItemRow>
             <Button
@@ -120,7 +124,7 @@ function App() {
           <CardItemRow>Bar</CardItemRow>
           <CardItemRow>Baz</CardItemRow>
         </Card>
-      </div>
+      </SectionSpacer>
     </div>
   );
 }
