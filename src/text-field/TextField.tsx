@@ -1,3 +1,4 @@
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import {
   Children,
   cloneElement,
@@ -7,6 +8,8 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
+import { useFormControlContext } from "../forms/FormControl";
+import { useFormControl } from "../forms/use-form-control";
 import { Input } from "../input/Input";
 
 /* -------------------------------------------------------------------------------------------------
@@ -139,19 +142,37 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
  * -----------------------------------------------------------------------------------------------*/
 
 type TextFieldInputElement = React.ElementRef<"input">;
-interface TextFieldInputProps extends React.ComponentPropsWithoutRef<"input"> {}
+interface TextFieldInputProps
+  extends Omit<React.ComponentPropsWithoutRef<"input">, "onChange"> {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
 
 const TextFieldInput = forwardRef<TextFieldInputElement, TextFieldInputProps>(
   (props, forwardedRef) => {
+    const context = useFormControlContext();
+    const field = useFormControl(props);
+
+    const [value, setValue] = useControllableState({
+      prop: props.value,
+      defaultProp: props.defaultValue,
+      onChange: props.onChange,
+    });
+
     return (
       <Input
         type="text"
-        {...props}
+        {...field}
+        disabled={context?.isDisabled}
+        hasErrors={context?.isInvalid}
+        onChange={(event) => setValue(event.target.value)}
+        value={value}
         style={{
           paddingLeft:
-            "max(var(--spacing-2, 0px), var(--left-slot-width, 0px))",
+            "max(var(--spacing-2, 0.5rem), var(--left-slot-width, 0.5rem))",
           paddingRight:
-            "max(var(--spacing-2, 0px), var(--right-slot-width, 0px))",
+            "max(var(--spacing-2, 0.5rem), var(--right-slot-width, 0.5rem))",
         }}
         ref={forwardedRef}
       />

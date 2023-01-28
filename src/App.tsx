@@ -13,6 +13,10 @@ import { Button } from "./button/Button";
 import { Stack } from "./stack/Stack";
 import { Card, CardItemRow } from "./card/Card";
 import { DateOfBirthField } from "./dob-field/dob-field";
+import { FormControl } from "./forms/FormControl";
+import { FormLabel } from "./forms/FormLabel";
+import { FormErrorMessage } from "./forms/FormFeedback";
+import { FormHelperText } from "./forms/FormHelpText";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8" {...props} />
@@ -25,9 +29,24 @@ function App() {
   const RightIcon = show ? EyeIcon : EyeSlashIcon;
 
   const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
+  const isInvalid = true;
+  const isDisabled = false;
+  const isReadOnly = false;
 
   return (
     <div className="space-y-8">
+      <SectionSpacer>
+        <FormControl
+          isInvalid={isInvalid}
+          isDisabled={isDisabled}
+          isReadOnly={isReadOnly}
+        >
+          <FormLabel>First Name</FormLabel>
+          <TextField.Input defaultValue="kalsdjflkajsdflkajsklfjaskalsdjflkajsdflkajsklfjas" />
+          <FormHelperText>This is a helper text.</FormHelperText>
+          <FormErrorMessage>This is an error message.</FormErrorMessage>
+        </FormControl>
+      </SectionSpacer>
       <SectionSpacer>
         <DateOfBirthField
           onChange={(date) => setDobState(date)}
