@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
   useCallback,
   useId,
@@ -46,11 +47,6 @@ export interface FormControlOptions {
 }
 
 interface FormControlContext extends FormControlOptions {
-  /**
-   * The label text used to inform users as to what information is
-   * requested for a text field.
-   */
-  label?: string;
   /**
    * The custom `id` to use for the form control. This is passed directly to the form element (e.g, Input).
    * - The form element (e.g. Input) gets the `id`
@@ -224,7 +220,10 @@ export const FormControl = forwardRef<FormControlElement, FormControlProps>(
 
     return (
       <FormControlContext.Provider value={context}>
-        <div {...getRootProps({}, ref)} className={props.className} />
+        <div
+          {...getRootProps({}, ref)}
+          className={clsx("space-y-1", props.className)}
+        />
       </FormControlContext.Provider>
     );
   }

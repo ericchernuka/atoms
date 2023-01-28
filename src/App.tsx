@@ -41,12 +41,16 @@ function App() {
     <div className="space-y-8">
       <SectionSpacer>
         <FormControl
+          isRequired={false}
           isInvalid={isInvalid}
           isDisabled={isDisabled}
           isReadOnly={isReadOnly}
         >
           <FormLabel>First Name</FormLabel>
-          <TextField.Input defaultValue="kalsdjflkajsdflkajsklfjaskalsdjflkajsdflkajsklfjas" />
+          <TextField.Input
+            name="firstName"
+            defaultValue="kalsdjflkajsdflkajsklfjaskalsdjflkajsdflkajsklfjas"
+          />
           <FormHelperText>This is a helper text.</FormHelperText>
           <FormErrorMessage>This is an error message.</FormErrorMessage>
         </FormControl>

@@ -4,16 +4,7 @@ import { useFormControlContext } from "./FormControl";
 
 type FormErrorMessageElement = ElementRef<"label">;
 
-export interface FormLabelProps extends ComponentPropsWithoutRef<"label"> {
-  /**
-   * @type React.ReactElement
-   */
-  requiredIndicator?: React.ReactElement;
-  /**
-   * @type React.ReactNode
-   */
-  optionalIndicator?: React.ReactNode;
-}
+export interface FormLabelProps extends ComponentPropsWithoutRef<"label"> {}
 
 /**
  * Used to enhance the usability of form controls.
@@ -25,24 +16,23 @@ export interface FormLabelProps extends ComponentPropsWithoutRef<"label"> {
  */
 export const FormLabel = forwardRef<FormErrorMessageElement, FormLabelProps>(
   function FormLabel(props, ref) {
-    const {
-      className,
-      children,
-      requiredIndicator = <RequiredIndicator />,
-      optionalIndicator = null,
-      ...rest
-    } = props;
+    const { className, children, ...rest } = props;
 
     const field = useFormControlContext();
     const ownProps = field?.getLabelProps(rest, ref) ?? { ref, ...rest };
-
+    const optionalIndicator = field?.isRequired ? null : (
+      <span className="text-gray-500">(optional)</span>
+    );
     return (
       <label
         {...ownProps}
-        className={clsx("block text-start", props.className)}
+        className={clsx(
+          "block text-start font-medium lg:text-sm space-x-1",
+          props.className
+        )}
       >
-        {children}
-        {field?.isRequired ? requiredIndicator : optionalIndicator}
+        <span>{children}</span>
+        {optionalIndicator}
       </label>
     );
   }
@@ -69,8 +59,10 @@ export const RequiredIndicator = forwardRef<
   return (
     <span
       {...field?.getRequiredIndicatorProps(props, ref)}
-      className={props.className}
-    />
+      className={clsx(props.className, "text-red-500")}
+    >
+      *
+    </span>
   );
 });
 
