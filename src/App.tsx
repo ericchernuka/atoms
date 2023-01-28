@@ -5,7 +5,7 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { ReactNode, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { LoadingButton } from "./button/LoadingButton";
 import * as Dialog from "./dialog/Dialog";
 import * as Collapsible from "./collapsible/Collapsible";
@@ -17,6 +17,7 @@ import { FormControl } from "./forms/FormControl";
 import { FormLabel } from "./forms/FormLabel";
 import { FormErrorMessage } from "./forms/FormFeedback";
 import { FormHelperText } from "./forms/FormHelpText";
+import { FocusGroup } from "./focus-group/FocusGroup";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8" {...props} />
@@ -26,12 +27,15 @@ function App() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [focus, setFocus] = useState(false);
   const RightIcon = show ? EyeIcon : EyeSlashIcon;
 
   const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
-  const isInvalid = true;
+  const isInvalid = false;
   const isDisabled = false;
   const isReadOnly = false;
+
+  const FocusComponent = focus ? FocusGroup : Fragment;
 
   return (
     <div className="space-y-8">

@@ -6,6 +6,7 @@ specifiers:
   '@radix-ui/react-alert-dialog': 1.0.2
   '@radix-ui/react-collapsible': 1.0.1
   '@radix-ui/react-dialog': 1.0.2
+  '@radix-ui/react-focus-scope': 1.0.1
   '@radix-ui/react-separator': 1.0.1
   '@radix-ui/react-slot': 1.0.1
   '@radix-ui/react-use-controllable-state': 1.0.0
@@ -32,6 +33,7 @@ dependencies:
   '@radix-ui/react-alert-dialog': 1.0.2_ib3m5ricvtkl2cll7qpr2f6lvq
   '@radix-ui/react-collapsible': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-dialog': 1.0.2_ib3m5ricvtkl2cll7qpr2f6lvq
+  '@radix-ui/react-focus-scope': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-separator': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-slot': 1.0.1_react@18.2.0
   '@radix-ui/react-use-controllable-state': 1.0.0_react@18.2.0
