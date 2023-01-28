@@ -1,4 +1,4 @@
-import * as TextField from "./text-field/TextField";
+import * as TextField from "./text-input/TextInput";
 import {
   ChevronDoubleRightIcon,
   EyeIcon,
@@ -18,6 +18,7 @@ import { FormLabel } from "./forms/FormLabel";
 import { FormErrorMessage } from "./forms/FormFeedback";
 import { FormHelperText } from "./forms/FormHelpText";
 import { FocusGroup } from "./focus-group/FocusGroup";
+import { NumberInput } from "./number-input/NumberInput";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8" {...props} />
@@ -27,15 +28,13 @@ function App() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [focus, setFocus] = useState(false);
+  const [number, setNumber] = useState(-123.1231);
   const RightIcon = show ? EyeIcon : EyeSlashIcon;
 
   const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
   const isInvalid = false;
   const isDisabled = false;
   const isReadOnly = false;
-
-  const FocusComponent = focus ? FocusGroup : Fragment;
 
   return (
     <div className="space-y-8">
@@ -47,12 +46,24 @@ function App() {
           isReadOnly={isReadOnly}
         >
           <FormLabel>First Name</FormLabel>
-          <TextField.Input
-            name="firstName"
-            defaultValue="kalsdjflkajsdflkajsklfjaskalsdjflkajsdflkajsklfjas"
-          />
+          <TextField.Input name="firstName" value="123444" />
           <FormHelperText>This is a helper text.</FormHelperText>
           <FormErrorMessage>This is an error message.</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isRequired
+          isInvalid={isInvalid}
+          isDisabled={isDisabled}
+          isReadOnly={isReadOnly}
+        >
+          <FormLabel>Age</FormLabel>
+          <NumberInput
+            name="age"
+            value={number}
+            onChange={(val) => setNumber(val)}
+          />
+          <FormHelperText>Enter your age</FormHelperText>
+          <FormErrorMessage>Incorrect age.</FormErrorMessage>
         </FormControl>
       </SectionSpacer>
       <SectionSpacer>

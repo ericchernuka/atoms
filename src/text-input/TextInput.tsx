@@ -1,4 +1,3 @@
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import {
   Children,
   cloneElement,
@@ -11,12 +10,13 @@ import {
 import { useFormControlContext } from "../forms/FormControl";
 import { useFormControl } from "../forms/use-form-control";
 import { Input } from "../input/Input";
+import { useControllableState } from "../use-controllable-state";
 
 /* -------------------------------------------------------------------------------------------------
  * Utils
  * -----------------------------------------------------------------------------------------------*/
-function isTextFieldInput(child: any): child is TextFieldInputElement {
-  return isValidElement(child) && child.type === TextFieldInput;
+function isTextInput(child: any): child is TextInputElement {
+  return isValidElement(child) && child.type === TextInput;
 }
 
 function isTextFieldSlot(child: any): child is TextFieldSlotElement {
@@ -33,7 +33,7 @@ interface TextFieldRootProps {
 const TextFieldRoot = ({ children }: TextFieldRootProps) => {
   let leftSlot: React.ReactElement | null = null;
   let rightSlot: React.ReactElement | null = null;
-  let input: TextFieldInputElement | null = null;
+  let input: TextInputElement | null = null;
 
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +45,7 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
       return;
     }
 
-    if (isTextFieldInput(child)) {
+    if (isTextInput(child)) {
       if (input) {
         throw Error(
           'Only a single "Input" part is expected among "Root" children'
@@ -138,25 +138,25 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
 };
 
 /* -------------------------------------------------------------------------------------------------
- * TextFieldInput
+ * TextInput
  * -----------------------------------------------------------------------------------------------*/
 
-type TextFieldInputElement = React.ElementRef<"input">;
-interface TextFieldInputProps
+type TextInputElement = React.ElementRef<"input">;
+interface TextInputProps
   extends Omit<React.ComponentPropsWithoutRef<"input">, "onChange"> {
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
 }
 
-const TextFieldInput = forwardRef<TextFieldInputElement, TextFieldInputProps>(
-  (props, forwardedRef) => {
+const TextInput = forwardRef<TextInputElement, TextInputProps>(
+  ({ defaultValue, ...props }, forwardedRef) => {
     const context = useFormControlContext();
     const field = useFormControl(props);
 
     const [value, setValue] = useControllableState({
       prop: props.value,
-      defaultProp: props.defaultValue,
+      defaultProp: defaultValue,
       onChange: props.onChange,
     });
 
@@ -180,7 +180,7 @@ const TextFieldInput = forwardRef<TextFieldInputElement, TextFieldInputProps>(
   }
 );
 
-TextFieldInput.displayName = "TextFieldInput";
+TextInput.displayName = "TextInput";
 
 /* -------------------------------------------------------------------------------------------------
  * TextFieldSlot
@@ -205,9 +205,9 @@ TextFieldSlot.displayName = "TextFieldSlot";
 
 export {
   TextFieldRoot as Root,
-  TextFieldInput as Input,
+  TextInput as Input,
   TextFieldSlot as Slot,
   TextFieldRoot as TextField,
-  TextFieldInput,
+  TextInput,
   TextFieldSlot,
 };
