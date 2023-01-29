@@ -23,7 +23,7 @@ export const FormErrorMessage = forwardRef<
     <div
       {...field?.getErrorMessageProps(props, ref)}
       className={clsx(
-        "text-red-500 text-sm flex items-center",
+        "text-red-500 sm:text-sm flex items-center",
         props.className
       )}
     />

@@ -27,7 +27,7 @@ export const FormLabel = forwardRef<FormErrorMessageElement, FormLabelProps>(
       <label
         {...ownProps}
         className={clsx(
-          "block text-start font-medium lg:text-sm space-x-1",
+          "block text-start font-medium sm:text-sm space-x-1",
           props.className
         )}
       >

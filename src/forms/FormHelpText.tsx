@@ -20,7 +20,7 @@ export const FormHelperText = forwardRef<
   return (
     <div
       {...field?.getHelpTextProps(props, ref)}
-      className="text-sm text-gray-500"
+      className="sm:text-sm text-gray-500"
     />
   );
 });

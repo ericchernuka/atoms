@@ -47,7 +47,7 @@ function App() {
             isInvalid={isInvalid}
             isDisabled={isDisabled}
             isReadOnly={isReadOnly}
-            className="sm:col-span-1"
+            className="sm:col-span-2"
           >
             <FormLabel>First Name</FormLabel>
             <TextField.Input name="firstName" value="123444" />
@@ -59,7 +59,7 @@ function App() {
             isInvalid={isInvalid}
             isDisabled={isDisabled}
             isReadOnly={isReadOnly}
-            className="sm:col-span-6"
+            className="sm:col-span-4"
           >
             <FormLabel>Age</FormLabel>
             <NumberInput
