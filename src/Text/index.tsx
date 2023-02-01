@@ -58,43 +58,35 @@ interface TextProps extends VariantProps<typeof textClassBuilder> {
 }
 
 const Text = React.forwardRef<TextElement, TextProps>(
-  ({ asChild, ...props }, forwardedRef) => {
+  (
+    {
+      asChild,
+      intent,
+      size,
+      transform,
+      truncate,
+      underline,
+      weight,
+      wordBreak,
+      ...props
+    },
+    forwardedRef
+  ) => {
     const Component = asChild ? Slot : ELEMENT;
-    return (
-      <Component
-        {...props}
-        className={textClassBuilder(props)}
-        ref={forwardedRef}
-      />
-    );
+    const classNames = textClassBuilder({
+      intent,
+      size,
+      transform,
+      truncate,
+      underline,
+      weight,
+      wordBreak,
+    });
+
+    return <Component {...props} className={classNames} ref={forwardedRef} />;
   }
 );
 
 Text.displayName = "Text";
 
-/* -------------------------------------------------------------------------------------------------
- * Text2
- * -----------------------------------------------------------------------------------------------*/
-type Element =
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "p"
-  | "span"
-  | "legend";
-
-interface Text2Props extends VariantProps<typeof textClassBuilder> {
-  as?: Element;
-  children?: React.ReactNode;
-  id?: string;
-}
-
-const Text2 = ({ as, ...props }: Text2Props) => {
-  const Component = as || ELEMENT;
-  return <Component {...props} className={textClassBuilder(props)} />;
-};
-
-export { Text, Text2 };
+export { Text };
