@@ -1,27 +1,26 @@
-import * as TextField from "./text-input/TextInput";
 import {
   ChevronDoubleRightIcon,
   EyeIcon,
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { Fragment, ReactNode, useRef, useState } from "react";
-import { LoadingButton } from "./button/LoadingButton";
-import * as Dialog from "./dialog/Dialog";
-import * as Collapsible from "./collapsible/Collapsible";
+import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
-import { Stack } from "./stack/Stack";
+import { LoadingButton } from "./button/LoadingButton";
 import { Card, CardItemRow } from "./card/Card";
+import * as Collapsible from "./collapsible/Collapsible";
+import { DateInput } from "./date-input/DateInput";
+import * as Dialog from "./dialog/Dialog";
 import { DateOfBirthField } from "./dob-field/dob-field";
 import { FormControl } from "./forms/FormControl";
-import { FormLabel } from "./forms/FormLabel";
 import { FormErrorMessage } from "./forms/FormFeedback";
 import { FormHelperText } from "./forms/FormHelpText";
-import { FocusGroup } from "./focus-group/FocusGroup";
-import { NumberInput } from "./number-input/NumberInput";
-import { DateInput } from "./date-input/DateInput";
+import { FormLabel } from "./forms/FormLabel";
 import { FormGrid } from "./layout/FormGrid";
-import { Text, Text2 } from "./Text";
+import { NumberInput } from "./number-input/NumberInput";
+import { Stack } from "./stack/Stack";
+import { Text } from "./Text";
+import * as TextField from "./text-input/TextInput";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8" {...props} />
@@ -46,11 +45,6 @@ function App() {
           <Text asChild weight="semibold" truncate transform="uppercase">
             <p style={{ width: 80 }}>Form Controls</p>
           </Text>
-          <div style={{ width: 80 }}>
-            <Text2 as="p" weight="semibold" truncate transform="uppercase">
-              Form Controls
-            </Text2>
-          </div>
           <FormGrid columns={6}>
             <FormControl
               isRequired={false}
@@ -138,7 +132,6 @@ function App() {
               iconBefore={<LockClosedIcon />}
               iconAfter={<ChevronDoubleRightIcon />}
               isLoading={loading}
-              onClick={() => setLoading(true)}
             >
               Checkout
             </LoadingButton>
@@ -155,10 +148,17 @@ function App() {
       </Dialog.Dialog>
 
       <SectionSpacer>
-        <Stack direction="row">
-          <Button>Click</Button>
-          <Button intent="primary-frida">Me</Button>
-          <Button intent="secondary">Or Me?</Button>
+        <Stack
+          direction="row"
+          spacing="extraLoose"
+          justify="spaceBetween"
+          asChild
+        >
+          <div className="bg-slate-400">
+            <Button>Click</Button>
+            <Button intent="primary-frida">Me</Button>
+            <Button intent="secondary">Or Me?</Button>
+          </div>
         </Stack>
       </SectionSpacer>
 
