@@ -92,9 +92,9 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
   // Measure the slot widths, save values as CSS custom properties.
   // Update the widths when slot change size
   useLayoutEffect(() => {
-    const setSlotsWidth = () => {
-      const leftSlotWidth = leftSlotRef.current?.offsetWidth;
-      const rightSlotWidth = rightSlotRef.current?.offsetWidth;
+    const setSlotsWidth = (forceOverride?: number) => {
+      const leftSlotWidth = forceOverride ?? leftSlotRef.current?.offsetWidth;
+      const rightSlotWidth = forceOverride ?? rightSlotRef.current?.offsetWidth;
 
       if (typeof leftSlotWidth === "number") {
         rootRef.current?.style.setProperty(
@@ -113,7 +113,7 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
 
     setSlotsWidth();
 
-    const observer = new ResizeObserver(setSlotsWidth);
+    const observer = new ResizeObserver(() => setSlotsWidth());
 
     if (leftSlotRef.current) {
       observer.observe(leftSlotRef.current, { box: "border-box" });
@@ -124,9 +124,10 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
     }
 
     return () => {
+      setSlotsWidth(0);
       observer.disconnect();
     };
-  }, []);
+  }, [children]);
 
   return (
     <div ref={rootRef} className="relative z-0">
