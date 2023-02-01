@@ -5,7 +5,7 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { Fragment, ReactNode, useState } from "react";
+import { Fragment, ReactNode, useRef, useState } from "react";
 import { LoadingButton } from "./button/LoadingButton";
 import * as Dialog from "./dialog/Dialog";
 import * as Collapsible from "./collapsible/Collapsible";
@@ -21,6 +21,7 @@ import { FocusGroup } from "./focus-group/FocusGroup";
 import { NumberInput } from "./number-input/NumberInput";
 import { DateInput } from "./date-input/DateInput";
 import { FormGrid } from "./layout/FormGrid";
+import { Text, Text2 } from "./Text";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8" {...props} />
@@ -41,52 +42,62 @@ function App() {
   return (
     <div className="space-y-8">
       <SectionSpacer>
-        <FormGrid columns={6}>
-          <FormControl
-            isRequired={false}
-            isInvalid={isInvalid}
-            isDisabled={isDisabled}
-            isReadOnly={isReadOnly}
-            className="sm:col-span-2"
-          >
-            <FormLabel>First Name</FormLabel>
-            <TextField.Input name="firstName" value="123444" />
-            <FormHelperText>This is a helper text.</FormHelperText>
-            <FormErrorMessage>This is an error message.</FormErrorMessage>
-          </FormControl>
-          <FormControl
-            isRequired
-            isInvalid={isInvalid}
-            isDisabled={isDisabled}
-            isReadOnly={isReadOnly}
-            className="sm:col-span-4"
-          >
-            <FormLabel>Age</FormLabel>
-            <NumberInput
-              name="age"
-              value={number}
-              onChange={(val) => setNumber(val)}
-            />
-            <FormHelperText>Enter your age</FormHelperText>
-            <FormErrorMessage>Incorrect age.</FormErrorMessage>
-          </FormControl>
-          <FormControl
-            isRequired={false}
-            isInvalid={isInvalid}
-            isDisabled={isDisabled}
-            isReadOnly={isReadOnly}
-            className="sm:col-span-4"
-          >
-            <FormLabel>Date</FormLabel>
-            <DateInput
-              name="date"
-              defaultValue="2023-01-20"
-              onChange={(val) => console.log(val)}
-            />
-            <FormHelperText>This is a helper text.</FormHelperText>
-            <FormErrorMessage>This is an error message.</FormErrorMessage>
-          </FormControl>
-        </FormGrid>
+        <Stack direction="column">
+          <Text asChild weight="semibold" truncate transform="uppercase">
+            <p style={{ width: 80 }}>Form Controls</p>
+          </Text>
+          <div style={{ width: 80 }}>
+            <Text2 as="p" weight="semibold" truncate transform="uppercase">
+              Form Controls
+            </Text2>
+          </div>
+          <FormGrid columns={6}>
+            <FormControl
+              isRequired={false}
+              isInvalid={isInvalid}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
+              className="sm:col-span-2"
+            >
+              <FormLabel>First Name</FormLabel>
+              <TextField.Input name="firstName" value="123444" />
+              <FormHelperText>This is a helper text.</FormHelperText>
+              <FormErrorMessage>This is an error message.</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isRequired
+              isInvalid={isInvalid}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
+              className="sm:col-span-4"
+            >
+              <FormLabel>Age</FormLabel>
+              <NumberInput
+                name="age"
+                value={number}
+                onChange={(val) => setNumber(val)}
+              />
+              <FormHelperText>Enter your age</FormHelperText>
+              <FormErrorMessage>Incorrect age.</FormErrorMessage>
+            </FormControl>
+            <FormControl
+              isRequired={false}
+              isInvalid={isInvalid}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
+              className="sm:col-span-4"
+            >
+              <FormLabel>Date</FormLabel>
+              <DateInput
+                name="date"
+                defaultValue="2023-01-20"
+                onChange={(val) => console.log(val)}
+              />
+              <FormHelperText>This is a helper text.</FormHelperText>
+              <FormErrorMessage>This is an error message.</FormErrorMessage>
+            </FormControl>
+          </FormGrid>
+        </Stack>
       </SectionSpacer>
       <SectionSpacer>
         <DateOfBirthField
