@@ -55,15 +55,20 @@ interface StackProps extends VariantProps<typeof stackClasses> {
 }
 
 const Stack = forwardRef<StackElement, StackProps>(
-  ({ asChild, direction = "column", ...props }, forwardedRef) => {
+  (
+    { asChild, direction, align, justify, spacing, wrap, ...props },
+    forwardedRef
+  ) => {
     const Component = asChild ? Slot : "div";
-    return (
-      <Component
-        {...props}
-        className={stackClasses({ direction, ...props })}
-        ref={forwardedRef}
-      />
-    );
+    const classNames = stackClasses({
+      direction,
+      align,
+      justify,
+      spacing,
+      wrap,
+    });
+
+    return <Component {...props} className={classNames} ref={forwardedRef} />;
   }
 );
 
