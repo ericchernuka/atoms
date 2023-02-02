@@ -7,7 +7,6 @@ import {
 import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
 import { LoadingButton } from "./button/LoadingButton";
-import { Card, CardItemRow } from "./card/Card";
 import * as Collapsible from "./collapsible/Collapsible";
 import { DateInput } from "./date-input/DateInput";
 import * as Dialog from "./dialog/Dialog";
@@ -17,7 +16,11 @@ import { FormErrorMessage } from "./forms/FormFeedback";
 import { FormHelperText } from "./forms/FormHelpText";
 import { FormLabel } from "./forms/FormLabel";
 import { FormGrid } from "./layout/FormGrid";
+import * as ListContainerPrimitive from "./list-containers/List";
+import * as List from "./list/List";
 import { NumberInput } from "./number-input/NumberInput";
+import * as CardPrimitive from "./panels/Card";
+import * as CardList from "./panels/CardList";
 import { Stack } from "./stack/Stack";
 import { Text } from "./Text";
 import * as TextField from "./text-input/TextInput";
@@ -29,7 +32,6 @@ const SectionSpacer = (props: { children: ReactNode }) => (
 function App() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [number, setNumber] = useState(-123.1231);
   const RightIcon = show ? EyeIcon : EyeSlashIcon;
 
@@ -42,8 +44,8 @@ function App() {
     <div className="space-y-8">
       <SectionSpacer>
         <Stack direction="column">
-          <Text asChild weight="semibold" truncate transform="uppercase">
-            <p style={{ width: 80 }}>Form Controls</p>
+          <Text weight="semibold" truncate transform="uppercase">
+            Form Controls
           </Text>
           <FormGrid columns={6}>
             <FormControl
@@ -180,21 +182,88 @@ function App() {
       </SectionSpacer>
 
       <SectionSpacer>
-        <Card>
-          <CardItemRow>
-            <Button
-              size="sm"
-              intent="primary-frida"
-              onClick={() => setExpanded((prev) => !prev)}
-            >
-              Click to Expand
-            </Button>
-          </CardItemRow>
-          {expanded && <CardItemRow className="bg-red-300">World</CardItemRow>}
-          <CardItemRow>Foo</CardItemRow>
-          <CardItemRow>Bar</CardItemRow>
-          <CardItemRow>Baz</CardItemRow>
-        </Card>
+        <CardPrimitive.Card divided>
+          <CardPrimitive.Header>Welcome</CardPrimitive.Header>
+          <CardPrimitive.Content>
+            Officia tempor est deserunt fugiat veniam.
+          </CardPrimitive.Content>
+          <CardPrimitive.Content inset="none">
+            Consectetur elit elit cillum ipsum non consectetur enim exercitation
+            in irure nisi. Id laboris eu non mollit tempor sit sunt ea enim.
+            Deserunt est exercitation ipsum voluptate culpa laboris minim ipsum
+            qui ipsum. Sit magna eu consequat occaecat nostrud quis sit qui et.
+            Fugiat cillum laborum amet magna cillum cupidatat proident cillum.
+            Culpa pariatur in elit ex.
+          </CardPrimitive.Content>
+          <CardPrimitive.Content>
+            <Stack direction="column" spacing="extraLoose">
+              <List.Root listType="ordered">
+                <List.Item>First</List.Item>
+                <List.Item>Second</List.Item>
+                <List.Item>Third</List.Item>
+              </List.Root>
+              <List.Root>
+                <List.Item>Let's</List.Item>
+                <List.Item>Get</List.Item>
+                <List.Item>Listing</List.Item>
+              </List.Root>
+              <List.Root listType="none">
+                <List.Item>Right</List.Item>
+                <List.Item>To</List.Item>
+                <List.Item>The</List.Item>
+                <List.Item>Edge</List.Item>
+              </List.Root>
+              <List.Root listType="ordered" position="inside">
+                <List.Item>First</List.Item>
+                <List.Item>Second</List.Item>
+                <List.Item>Third</List.Item>
+              </List.Root>
+            </Stack>
+          </CardPrimitive.Content>
+          <CardPrimitive.Content>
+            And lastly, a tiny bit of footer text
+          </CardPrimitive.Content>
+        </CardPrimitive.Card>
+      </SectionSpacer>
+
+      <SectionSpacer>
+        <CardList.Root>
+          <CardList.Card divided>
+            <CardPrimitive.Header>Hello</CardPrimitive.Header>
+            <CardPrimitive.Content>World!</CardPrimitive.Content>
+          </CardList.Card>
+
+          <CardList.Card divided>
+            <CardPrimitive.Header>Hello</CardPrimitive.Header>
+            <CardPrimitive.Content>World!</CardPrimitive.Content>
+          </CardList.Card>
+        </CardList.Root>
+      </SectionSpacer>
+
+      <SectionSpacer>
+        <ListContainerPrimitive.Root>
+          <ListContainerPrimitive.Item>
+            <CardList.Card divided>
+              <CardPrimitive.Header>Hello</CardPrimitive.Header>
+              <CardPrimitive.Content>World!</CardPrimitive.Content>
+            </CardList.Card>
+          </ListContainerPrimitive.Item>
+          <ListContainerPrimitive.Item>
+            <CardList.Card>
+              <CardPrimitive.Header>Hello</CardPrimitive.Header>
+              <CardPrimitive.Content>World!</CardPrimitive.Content>
+            </CardList.Card>
+          </ListContainerPrimitive.Item>
+          <ListContainerPrimitive.Item>
+            In velit dolor culpa reprehenderit aliqua fugiat. Deserunt ex ad
+            anim adipisicing consequat ex reprehenderit duis labore sit duis.
+            Labore ea qui cupidatat ut laboris consequat nisi labore
+            reprehenderit amet. Exercitation minim est tempor est. Eiusmod sint
+            nostrud Lorem cupidatat ullamco. Ea commodo veniam esse mollit.
+            Reprehenderit aute deserunt adipisicing veniam nostrud consectetur
+            adipisicing sit culpa proident nulla et dolore consequat dolore.
+          </ListContainerPrimitive.Item>
+        </ListContainerPrimitive.Root>
       </SectionSpacer>
     </div>
   );

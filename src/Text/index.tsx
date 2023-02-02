@@ -44,6 +44,9 @@ const textClassBuilder = cva("transition-colors ease-in-out duration-300", {
     underline: {
       true: "underline",
     },
+    visuallyHidden: {
+      true: "sr-only",
+    },
   },
 });
 
@@ -68,6 +71,7 @@ const Text = React.forwardRef<TextElement, TextProps>(
       underline,
       weight,
       wordBreak,
+      visuallyHidden,
       ...props
     },
     forwardedRef
@@ -81,6 +85,7 @@ const Text = React.forwardRef<TextElement, TextProps>(
       underline,
       weight,
       wordBreak,
+      visuallyHidden,
     });
 
     return <Component {...props} className={classNames} ref={forwardedRef} />;
