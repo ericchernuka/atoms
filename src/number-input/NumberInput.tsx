@@ -36,7 +36,7 @@ const NumberInput = forwardRef<NumberInputElement, NumberInputProps>(
     const field = useFormControl(props);
 
     const [value, setValue] = useControllableState<number>({
-      prop: parseFloat(props.value?.toString().replace(/[^0-9.-]/g, "") ?? ""),
+      prop: props.value,
       defaultProp: defaultValue,
       onChange: props.onChange,
     });

@@ -44,7 +44,7 @@ function App() {
     <div className="space-y-8">
       <SectionSpacer>
         <Stack direction="column">
-          <Text weight="semibold" truncate transform="uppercase">
+          <Text weight="semibold" intent="subdued" transform="uppercase">
             Form Controls
           </Text>
           <FormGrid columns={6}>
@@ -56,7 +56,7 @@ function App() {
               className="sm:col-span-2"
             >
               <FormLabel>First Name</FormLabel>
-              <TextField.Input name="firstName" value="123444" />
+              <TextField.Input name="firstName" placeholder="asdsadfs" />
               <FormHelperText>This is a helper text.</FormHelperText>
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
@@ -71,6 +71,7 @@ function App() {
               <NumberInput
                 name="age"
                 value={number}
+                max={666}
                 onChange={(val) => setNumber(val)}
               />
               <FormHelperText>Enter your age</FormHelperText>
@@ -156,7 +157,7 @@ function App() {
           justify="spaceBetween"
           asChild
         >
-          <div className="bg-slate-400">
+          <div className="bg-slate-200">
             <Button>Click</Button>
             <Button intent="primary-frida">Me</Button>
             <Button intent="secondary">Or Me?</Button>
@@ -188,12 +189,14 @@ function App() {
             Officia tempor est deserunt fugiat veniam.
           </CardPrimitive.Content>
           <CardPrimitive.Content inset="none">
-            Consectetur elit elit cillum ipsum non consectetur enim exercitation
-            in irure nisi. Id laboris eu non mollit tempor sit sunt ea enim.
-            Deserunt est exercitation ipsum voluptate culpa laboris minim ipsum
-            qui ipsum. Sit magna eu consequat occaecat nostrud quis sit qui et.
-            Fugiat cillum laborum amet magna cillum cupidatat proident cillum.
-            Culpa pariatur in elit ex.
+            <div className="p-20">
+              Consectetur elit elit cillum ipsum non consectetur enim
+              exercitation in irure nisi. Id laboris eu non mollit tempor sit
+              sunt ea enim. Deserunt est exercitation ipsum voluptate culpa
+              laboris minim ipsum qui ipsum. Sit magna eu consequat occaecat
+              nostrud quis sit qui et. Fugiat cillum laborum amet magna cillum
+              cupidatat proident cillum. Culpa pariatur in elit ex.
+            </div>
           </CardPrimitive.Content>
           <CardPrimitive.Content>
             <Stack direction="column" spacing="extraLoose">
@@ -243,16 +246,16 @@ function App() {
       <SectionSpacer>
         <ListContainerPrimitive.Root>
           <ListContainerPrimitive.Item>
-            <CardList.Card divided>
+            <CardPrimitive.Card divided>
               <CardPrimitive.Header>Hello</CardPrimitive.Header>
               <CardPrimitive.Content>World!</CardPrimitive.Content>
-            </CardList.Card>
+            </CardPrimitive.Card>
           </ListContainerPrimitive.Item>
           <ListContainerPrimitive.Item>
-            <CardList.Card>
+            <CardPrimitive.Card>
               <CardPrimitive.Header>Hello</CardPrimitive.Header>
               <CardPrimitive.Content>World!</CardPrimitive.Content>
-            </CardList.Card>
+            </CardPrimitive.Card>
           </ListContainerPrimitive.Item>
           <ListContainerPrimitive.Item>
             In velit dolor culpa reprehenderit aliqua fugiat. Deserunt ex ad

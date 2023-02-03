@@ -101,17 +101,6 @@ const DateOfBirthField = forwardRef<
     >
       <legend className="sr-only">Date of Birth</legend>
       <div className={clsx("flex gap-1 sm:gap-4")}>
-        <FormGroupWithLabel id="day" label="Birth day">
-          <Input
-            id="day"
-            type="number"
-            name="day"
-            value={dayPart}
-            onChange={handleDayOrYear}
-            hasErrors={!isValidLocalDate}
-          />
-        </FormGroupWithLabel>
-
         <FormGroupWithLabel label="Birth month" id="month">
           <select
             id="month"
@@ -140,6 +129,17 @@ const DateOfBirthField = forwardRef<
             <option value="11">November</option>
             <option value="12">December</option>
           </select>
+        </FormGroupWithLabel>
+
+        <FormGroupWithLabel id="day" label="Birth day">
+          <Input
+            id="day"
+            type="number"
+            name="day"
+            value={dayPart}
+            onChange={handleDayOrYear}
+            hasErrors={!isValidLocalDate}
+          />
         </FormGroupWithLabel>
 
         <FormGroupWithLabel label="Birth year" id="year">

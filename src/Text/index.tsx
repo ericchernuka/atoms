@@ -1,6 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
-import clsx from "clsx";
 import * as React from "react";
 
 /* -------------------------------------------------------------------------------------------------
