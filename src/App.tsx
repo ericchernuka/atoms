@@ -4,12 +4,11 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
 import { ButtonGroup } from "./button/ButtonGroup";
 import { LoadingButton } from "./button/LoadingButton";
-import * as Collapsible from "./collapsible/Collapsible";
+import * as CollapsiblePrimitive from "./collapsible/Collapsible";
 import { DateInput } from "./date-input/DateInput";
 import * as Dialog from "./dialog/Dialog";
 import { DateOfBirthField } from "./dob-field/dob-field";
@@ -28,14 +27,25 @@ import { Text } from "./Text";
 import * as TextField from "./text-input/TextInput";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
-  <div className="p-8" {...props} />
+  <div className="p-8 flex flex-col items-start space-y-2 w-full" {...props} />
+);
+
+const Header = (props: { children: ReactNode }) => (
+  <Text
+    size="lg"
+    weight="semibold"
+    intent="subdued"
+    transform="uppercase"
+    {...props}
+  />
 );
 
 function App() {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState(-123.1231);
-  const RightIcon = show ? EyeIcon : EyeSlashIcon;
+  const RightIcon = showPassword ? EyeIcon : EyeSlashIcon;
 
   const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
   const isInvalid = false;
@@ -45,10 +55,8 @@ function App() {
   return (
     <div className="space-y-8">
       <SectionSpacer>
-        <Stack direction="column">
-          <Text weight="semibold" intent="subdued" transform="uppercase">
-            Form Controls
-          </Text>
+        <Stack direction="column" shouldFillContainer>
+          <Header>Form Controls</Header>
           <FormGrid columns={6}>
             <FormControl
               isRequired={false}
@@ -99,6 +107,7 @@ function App() {
         </Stack>
       </SectionSpacer>
       <SectionSpacer>
+        <Header>DOB Input</Header>
         <DateOfBirthField
           onChange={(date) => setDobState(date)}
           value={dobState}
@@ -108,12 +117,14 @@ function App() {
         </button>
       </SectionSpacer>
       <SectionSpacer>
+        <Header>Text Field</Header>
+
         <TextField.Root>
           <TextField.Slot>
             <LockClosedIcon className="h-5 w-5 text-gray-400" />
           </TextField.Slot>
           <TextField.Input
-            type={show ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             defaultValue="kalsdjflkajsdflkajsklfjaskalsdjflkajsdflkajsklfjas"
           />
           <TextField.Slot>
@@ -121,59 +132,78 @@ function App() {
             <Button
               intent="secondary"
               size="xs"
-              onClick={() => setShow((prev) => !prev)}
+              onClick={() => setShowPassword((prev) => !prev)}
             >
-              {show ? "Hide Password" : "Show"}
+              {showPassword ? "Hide Password" : "Show"}
             </Button>
           </TextField.Slot>
         </TextField.Root>
       </SectionSpacer>
 
-      <Dialog.Root open={loading} onOpenChange={(open) => setLoading(open)}>
-        <SectionSpacer>
+      <SectionSpacer>
+        <Header>Loading Button</Header>
+        <LoadingButton
+          intent="primary-freddie"
+          iconAfter={<ChevronDoubleRightIcon />}
+          isLoading={loading}
+          onClick={() => {
+            setLoading(true);
+            setTimeout(() => setLoading(false), 2000);
+          }}
+        >
+          Save
+        </LoadingButton>
+      </SectionSpacer>
+
+      <SectionSpacer>
+        <Header>Dialog</Header>
+
+        <Dialog.Root
+          open={isDialogOpen}
+          onOpenChange={(open) => setIsDialogOpen(open)}
+        >
           <Dialog.DialogTrigger asChild>
             <LoadingButton
               intent="primary-frida"
               iconBefore={<LockClosedIcon />}
               iconAfter={<ChevronDoubleRightIcon />}
-              isLoading={loading}
             >
               Checkout
             </LoadingButton>
           </Dialog.DialogTrigger>
-        </SectionSpacer>
 
-        <Dialog.Content>
-          <Dialog.Header>Welcome</Dialog.Header>
-          <Dialog.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis. Class
-            aptent taciti sociosqu ad litora torquent per conubia nostra, per
-            inceptos himenaeos. Curabitur tempus urna at turpis condimentum
-            lobortis.
-          </Dialog.Body>
-          <Dialog.Footer>
-            <ButtonGroup>
-              <Dialog.Close asChild>
-                <Button intent="secondary" shouldFillContainer>
-                  Cancel
-                </Button>
-              </Dialog.Close>
-              <Dialog.Close asChild>
-                <Button shouldFillContainer intent="primary-frida">
-                  Deactivate
-                </Button>
-              </Dialog.Close>
-            </ButtonGroup>
-          </Dialog.Footer>
-        </Dialog.Content>
-      </Dialog.Root>
-
+          <Dialog.Content>
+            <Dialog.Header>Welcome</Dialog.Header>
+            <Dialog.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              vulputate libero et velit interdum, ac aliquet odio mattis. Class
+              aptent taciti sociosqu ad litora torquent per conubia nostra, per
+              inceptos himenaeos. Curabitur tempus urna at turpis condimentum
+              lobortis.
+            </Dialog.Body>
+            <Dialog.Footer>
+              <ButtonGroup>
+                <Dialog.Close asChild>
+                  <Button intent="secondary" shouldFillContainer>
+                    Cancel
+                  </Button>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <Button shouldFillContainer intent="primary-frida">
+                    Deactivate
+                  </Button>
+                </Dialog.Close>
+              </ButtonGroup>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Root>
+      </SectionSpacer>
       <SectionSpacer>
         <Stack
           direction="row"
           spacing="extraLoose"
           justify="spaceBetween"
+          shouldFillContainer
           asChild
         >
           <div className="bg-slate-200">
@@ -185,23 +215,26 @@ function App() {
       </SectionSpacer>
 
       <SectionSpacer>
-        <Collapsible.Root>
-          <Collapsible.Trigger asChild>
+        <Header>Collapsible</Header>
+        <CollapsiblePrimitive.Root>
+          <CollapsiblePrimitive.Trigger asChild>
             <Button intent="primary-frida">Expand me</Button>
-          </Collapsible.Trigger>
+          </CollapsiblePrimitive.Trigger>
 
-          <Collapsible.Content>
+          <CollapsiblePrimitive.Content>
             klasjdflkasjdfla lkasd falksdf j klasjdflkasjdfla lkasd falksdf j
             klasjdflkasjdfla lkasd falksdf j klasjdflkasjdfla lkasd falksdf j
             klasjdflkasjdfla lkasd falksdf j klasjdflkasjdfla lkasd falksdf j
             klasjdflkasjdfla lkasd falksdf j klasjdflkasjdfla lkasd falksdf j
             klasjdflkasjdfla lkasd falksdf j klasjdflkasjdfla lkasd falksdf j
             klasjdflkasjdfla lkasd falksdf j
-          </Collapsible.Content>
-        </Collapsible.Root>
+          </CollapsiblePrimitive.Content>
+        </CollapsiblePrimitive.Root>
       </SectionSpacer>
 
       <SectionSpacer>
+        <Header>Cards</Header>
+
         <CardPrimitive.Card divided>
           <CardPrimitive.Header>Welcome</CardPrimitive.Header>
           <CardPrimitive.Content>
@@ -249,6 +282,7 @@ function App() {
       </SectionSpacer>
 
       <SectionSpacer>
+        <Header>Card List</Header>
         <CardList.Root>
           <CardList.Card divided>
             <CardPrimitive.Header>Hello</CardPrimitive.Header>
@@ -263,6 +297,7 @@ function App() {
       </SectionSpacer>
 
       <SectionSpacer>
+        <Header>List Container</Header>
         <ListContainerPrimitive.Root>
           <ListContainerPrimitive.Item>
             <CardPrimitive.Card divided>

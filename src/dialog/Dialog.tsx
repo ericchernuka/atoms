@@ -6,8 +6,6 @@ import {
 } from "@radix-ui/react-dialog";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
-import { Button } from "../button/Button";
-import { ButtonGroup } from "../button/ButtonGroup";
 
 type DialogElement = React.ElementRef<typeof DialogPrimitive.Content>;
 interface DialogProps extends DialogContentProps {}

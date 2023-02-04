@@ -9,30 +9,10 @@ module.exports = {
       padding: {
         "l-slot": "max(var(--space-2), var(--left-slot-width))",
       },
-      animation: {
-        "slide-down": "slideDown 300ms ease-out",
-        "slide-up": "slideUp 300ms ease-out",
-      },
       keyframes: {
         shimmer: {
           "100%": {
             transform: "translateX(100%)",
-          },
-        },
-        slideDown: {
-          from: {
-            height: 0,
-          },
-          to: {
-            height: "var(--radix-collapsible-content-height)",
-          },
-        },
-        slideUp: {
-          from: {
-            height: "var(--radix-collapsible-content-height)",
-          },
-          to: {
-            height: 0,
           },
         },
       },
@@ -41,6 +21,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/forms"),
     require("tailwindcss-radix"),
+    require("tailwindcss-animate"),
     // function ({ addBase, theme }) {
     //   const spacings = theme("spacing");
     //   const spacingProperties = Object.keys(spacings).reduce(
@@ -58,21 +39,6 @@ module.exports = {
     //     ":root": spacingProperties,
     //   });
     // },
-    plugin(({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          "animation-delay": (value) => {
-            return {
-              "animation-delay": value,
-            };
-          },
-        },
-        {
-          values: theme("transitionDelay"),
-        }
-      );
-    }),
-    // margin-inline-start and margin-inline-end utils
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
         {

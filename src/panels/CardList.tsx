@@ -12,7 +12,12 @@ interface CardListProps
 const CardList = React.forwardRef<CardListElement, CardListProps>(
   (props, forwardedRef) => {
     return (
-      <ul {...props} role="list" className="space-y-3" ref={forwardedRef} />
+      <ul
+        {...props}
+        role="list"
+        className="space-y-3 w-full"
+        ref={forwardedRef}
+      />
     );
   }
 );

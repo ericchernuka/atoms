@@ -41,6 +41,9 @@ const stackClasses = cva("stack", {
       loose: "stack-space-6",
       extraLoose: "stack-space-8",
     },
+    shouldFillContainer: {
+      true: "w-full",
+    },
   },
   defaultVariants: {
     direction: "column",
@@ -56,7 +59,16 @@ interface StackProps extends VariantProps<typeof stackClasses> {
 
 const Stack = forwardRef<StackElement, StackProps>(
   (
-    { asChild, direction, align, justify, spacing, wrap, ...props },
+    {
+      asChild,
+      direction,
+      align,
+      justify,
+      spacing,
+      wrap,
+      shouldFillContainer,
+      ...props
+    },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : "div";
@@ -64,6 +76,7 @@ const Stack = forwardRef<StackElement, StackProps>(
       direction,
       align,
       justify,
+      shouldFillContainer,
       spacing,
       wrap,
     });

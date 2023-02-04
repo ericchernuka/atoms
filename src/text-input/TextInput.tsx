@@ -130,7 +130,7 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
   }, [children]);
 
   return (
-    <div ref={rootRef} className="relative z-0">
+    <div ref={rootRef} className="relative z-0 w-full">
       {leftSlot}
       {input}
       {rightSlot}
