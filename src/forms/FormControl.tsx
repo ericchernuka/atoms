@@ -84,7 +84,7 @@ function useFormControlProvider(props: FormControlContext) {
 
   const labelId = `${id}-label`;
   const feedbackId = `${id}-feedback`;
-  const helpTextId = `${id}-helptext`;
+  const helpTextId = `${id}-helpText`;
 
   /**
    * Track whether the `FormErrorMessage` has been rendered.
