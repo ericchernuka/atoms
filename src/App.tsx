@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
-import { ButtonGroup } from "./button/ButtonGroup";
 import { LoadingButton } from "./button/LoadingButton";
 import { CharacterCount } from "./character-count/CharacterCount";
 import * as CollapsiblePrimitive from "./collapsible/Collapsible";
@@ -32,15 +31,27 @@ const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8 flex flex-col items-start space-y-2 w-full" {...props} />
 );
 
-const Header = (props: { children: ReactNode }) => (
-  <Text
-    size="lg"
-    weight="semibold"
-    intent="subdued"
-    transform="uppercase"
-    {...props}
-  />
-);
+const Header = ({
+  level = 2,
+  ...props
+}: {
+  children: ReactNode;
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+}) => {
+  const Component = `h${level}` as const;
+
+  return (
+    <Text
+      asChild
+      size="lg"
+      weight="semibold"
+      intent="subdued"
+      transform="uppercase"
+    >
+      <Component {...props} />
+    </Text>
+  );
+};
 
 function App() {
   const [showPassword, setShowPassword] = useState(false);
