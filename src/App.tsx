@@ -77,8 +77,8 @@ function App() {
           <FormGrid columns={6}>
             <FormControl
               isInvalid={isInvalid}
-              isDisabled={isDisabled}
-              isReadOnly={isReadOnly}
+              disabled={isDisabled}
+              readOnly={isReadOnly}
               className="sm:col-span-2"
             >
               <FormLabel>First Name</FormLabel>
@@ -87,10 +87,10 @@ function App() {
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
             <FormControl
-              isRequired={false}
+              required={false}
               isInvalid={isInvalid}
-              isDisabled={isDisabled}
-              isReadOnly={isReadOnly}
+              disabled={isDisabled}
+              readOnly={isReadOnly}
               className="sm:col-span-4"
             >
               <FormLabel>Age</FormLabel>
@@ -105,10 +105,10 @@ function App() {
             </FormControl>
 
             <FormControl
-              isRequired={false}
+              required={false}
               isInvalid={isDescriptionInvalid}
-              isDisabled={isDisabled}
-              isReadOnly={isReadOnly}
+              disabled={isDisabled}
+              readOnly={isReadOnly}
               className="sm:col-span-6"
             >
               <HStack justify="spaceBetween">
@@ -132,10 +132,10 @@ function App() {
             </FormControl>
 
             <FormControl
-              isRequired={false}
+              required={false}
               isInvalid={isInvalid}
-              isDisabled={isDisabled}
-              isReadOnly={isReadOnly}
+              disabled={isDisabled}
+              readOnly={isReadOnly}
               className="sm:col-span-4"
             >
               <FormLabel>Date</FormLabel>

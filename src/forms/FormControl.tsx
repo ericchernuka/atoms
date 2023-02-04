@@ -21,7 +21,7 @@ export interface FormControlOptions {
    *
    * @default false
    */
-  isRequired?: boolean;
+  required?: boolean;
   /**
    * If `true`, the form control will be disabled. This has 2 side effects:
    * - The `FormLabel` will have `data-disabled` attribute
@@ -29,7 +29,7 @@ export interface FormControlOptions {
    *
    * @default false
    */
-  isDisabled?: boolean;
+  disabled?: boolean;
   /**
    * If `true`, the form control will be invalid. This has 2 side effects:
    * - The `FormLabel` and `FormErrorIcon` will have `data-invalid` set to `true`
@@ -43,7 +43,7 @@ export interface FormControlOptions {
    *
    * @default false
    */
-  isReadOnly?: boolean;
+  readOnly?: boolean;
 }
 
 interface FormControlContext extends FormControlOptions {
@@ -71,10 +71,10 @@ export const useFormControlContext = () => useContext(FormControlContext);
 function useFormControlProvider(props: FormControlContext) {
   const {
     id: idProp,
-    isRequired = true,
+    required = true,
     isInvalid,
-    isDisabled,
-    isReadOnly,
+    disabled,
+    readOnly,
     ...htmlProps
   } = props;
 
@@ -98,9 +98,6 @@ function useFormControlProvider(props: FormControlContext) {
    */
   const [hasHelpText, setHasHelpText] = useState(false);
 
-  // Track whether the form element (e.g, `input`) has focus.
-  const [isFocused, setFocus] = useState(false);
-
   const getHelpTextProps = useCallback<PropGetter>(
     (props = {}, forwardedRef = null) => ({
       id: helpTextId,
@@ -121,14 +118,13 @@ function useFormControlProvider(props: FormControlContext) {
     (props = {}, forwardedRef = null) => ({
       ...props,
       ref: forwardedRef,
-      "data-focus": dataAttr(isFocused),
-      "data-disabled": dataAttr(isDisabled),
+      "data-disabled": dataAttr(disabled),
       "data-invalid": dataAttr(isInvalid),
-      "data-readonly": dataAttr(isReadOnly),
+      "data-readonly": dataAttr(readOnly),
       id: props.id ?? labelId,
       htmlFor: props.htmlFor ?? id,
     }),
-    [id, isDisabled, isFocused, isInvalid, isReadOnly, labelId]
+    [id, disabled, isInvalid, readOnly, labelId]
   );
 
   const getErrorMessageProps = useCallback<PropGetter>(
@@ -170,13 +166,10 @@ function useFormControlProvider(props: FormControlContext) {
   );
 
   return {
-    isRequired: !!isRequired,
+    required: !!required,
     isInvalid: !!isInvalid,
-    isReadOnly: !!isReadOnly,
-    isDisabled: !!isDisabled,
-    isFocused: !!isFocused,
-    onFocus: () => setFocus(true),
-    onBlur: () => setFocus(false),
+    readOnly: !!readOnly,
+    disabled: !!disabled,
     hasFeedbackText,
     setHasFeedbackText,
     hasHelpText,
@@ -202,7 +195,7 @@ export interface FormControlProps
 
 /**
  * FormControl provides context such as
- * `isInvalid`, `isDisabled`, and `isRequired` to form elements.
+ * `isInvalid`, `isDisabled`, and `required` to form elements.
  *
  * This is commonly used in form elements such as `input`,
  * `select`, `textarea`, etc.

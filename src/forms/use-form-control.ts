@@ -4,8 +4,6 @@ import { FormControlOptions, useFormControlContext } from "./FormControl";
 export interface UseFormControlProps<T extends HTMLElement>
   extends FormControlOptions {
   id?: string;
-  onFocus?: React.FocusEventHandler<T>;
-  onBlur?: React.FocusEventHandler<T>;
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
@@ -24,17 +22,17 @@ export interface UseFormControlProps<T extends HTMLElement>
 export function useFormControl<T extends HTMLElement>(
   props: UseFormControlProps<T>
 ) {
-  const { isDisabled, isInvalid, isReadOnly, isRequired, ...rest } =
+  const { disabled, isInvalid, readOnly, required, ...rest } =
     useFormControlProps(props);
 
   return {
     ...rest,
-    disabled: isDisabled,
-    readOnly: isReadOnly,
-    required: isRequired,
+    disabled,
+    readOnly,
+    required,
     "aria-invalid": ariaAttr(isInvalid),
-    "aria-required": ariaAttr(isRequired),
-    "aria-readonly": ariaAttr(isReadOnly),
+    "aria-required": ariaAttr(required),
+    "aria-readonly": ariaAttr(readOnly),
   };
 }
 
@@ -46,19 +44,7 @@ export function useFormControlProps<T extends HTMLElement>(
 ) {
   const field = useFormControlContext();
 
-  const {
-    id,
-    disabled,
-    readOnly,
-    required,
-    isRequired,
-    isInvalid,
-    isReadOnly,
-    isDisabled,
-    onFocus,
-    onBlur,
-    ...rest
-  } = props;
+  const { id, disabled, readOnly, required, isInvalid, ...rest } = props;
 
   const labelIds: string[] = props["aria-describedby"]
     ? [props["aria-describedby"]]
@@ -77,11 +63,9 @@ export function useFormControlProps<T extends HTMLElement>(
     ...rest,
     "aria-describedby": labelIds.join(" ") || undefined,
     id: id ?? field?.id,
-    isDisabled: disabled ?? isDisabled ?? field?.isDisabled,
-    isReadOnly: readOnly ?? isReadOnly ?? field?.isReadOnly,
-    isRequired: required ?? isRequired ?? field?.isRequired,
+    disabled: disabled ?? field?.disabled,
+    readOnly: readOnly ?? field?.readOnly,
+    required: required ?? field?.required,
     isInvalid: isInvalid ?? field?.isInvalid,
-    onFocus: callAllHandlers(field?.onFocus, onFocus),
-    onBlur: callAllHandlers(field?.onBlur, onBlur),
   };
 }

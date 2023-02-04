@@ -2,8 +2,42 @@ import { renderHook } from "@testing-library/react";
 import { useFormControl } from "../use-form-control";
 
 describe("useFormControl", () => {
+  describe("disabled attributes", () => {
+    const attribute = "disabled";
+
+    test.each([
+      {
+        attribute,
+        attributeValue: undefined,
+        outputProperty: "disabled",
+        expected: undefined,
+      },
+      {
+        attribute,
+        attributeValue: true,
+        outputProperty: "disabled",
+        expected: true,
+      },
+      {
+        attribute,
+        attributeValue: false,
+        outputProperty: "disabled",
+        expected: false,
+      },
+    ] as const)(
+      'should return $expected for $outputProperty when "$attributeName" is $attributeValue',
+      ({ attribute, attributeValue, outputProperty, expected }) => {
+        const { result } = renderHook(useFormControl, {
+          initialProps: { [attribute]: attributeValue },
+        });
+
+        expect(result.current[outputProperty]).toBe(expected);
+      }
+    );
+  });
+
   describe("readOnly attributes", () => {
-    const attribute = "isReadOnly";
+    const attribute = "readOnly";
 
     test.each([
       {
@@ -56,7 +90,7 @@ describe("useFormControl", () => {
   });
 
   describe("required attributes", () => {
-    const attribute = "isRequired";
+    const attribute = "required";
 
     test.each([
       {

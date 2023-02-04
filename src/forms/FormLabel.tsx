@@ -20,7 +20,7 @@ export const FormLabel = forwardRef<FormErrorMessageElement, FormLabelProps>(
 
     const field = useFormControlContext();
     const ownProps = field?.getLabelProps(rest, ref) ?? { ref, ...rest };
-    const optionalIndicator = field?.isRequired ? null : (
+    const optionalIndicator = field?.required ? null : (
       <span className="text-gray-500">(optional)</span>
     );
     return (
@@ -39,31 +39,3 @@ export const FormLabel = forwardRef<FormErrorMessageElement, FormLabelProps>(
 );
 
 FormLabel.displayName = "FormLabel";
-
-type RequiredIndicatorElement = ElementRef<"span">;
-export interface RequiredIndicatorProps
-  extends ComponentPropsWithoutRef<"span"> {}
-
-/**
- * Used to show a "required" text or an asterisks (*) to indicate that
- * a field is required.
- */
-export const RequiredIndicator = forwardRef<
-  RequiredIndicatorElement,
-  RequiredIndicatorProps
->(function RequiredIndicator(props, ref) {
-  const field = useFormControlContext();
-
-  if (!field?.isRequired) return null;
-
-  return (
-    <span
-      {...field?.getRequiredIndicatorProps(props, ref)}
-      className={clsx(props.className, "text-red-500")}
-    >
-      *
-    </span>
-  );
-});
-
-RequiredIndicator.displayName = "RequiredIndicator";
