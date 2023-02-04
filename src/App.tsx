@@ -4,8 +4,10 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
+import { DialogTitle } from "@radix-ui/react-dialog";
 import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
+import { ButtonGroup } from "./button/ButtonGroup";
 import { LoadingButton } from "./button/LoadingButton";
 import * as Collapsible from "./collapsible/Collapsible";
 import { DateInput } from "./date-input/DateInput";
@@ -127,7 +129,7 @@ function App() {
         </TextField.Root>
       </SectionSpacer>
 
-      <Dialog.Dialog open={loading} onOpenChange={(open) => setLoading(open)}>
+      <Dialog.Root open={loading} onOpenChange={(open) => setLoading(open)}>
         <SectionSpacer>
           <Dialog.DialogTrigger asChild>
             <LoadingButton
@@ -141,14 +143,31 @@ function App() {
           </Dialog.DialogTrigger>
         </SectionSpacer>
 
-        <Dialog.DialogContent open={loading}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-          vulputate libero et velit interdum, ac aliquet odio mattis. Class
-          aptent taciti sociosqu ad litora torquent per conubia nostra, per
-          inceptos himenaeos. Curabitur tempus urna at turpis condimentum
-          lobortis.
-        </Dialog.DialogContent>
-      </Dialog.Dialog>
+        <Dialog.Content>
+          <Dialog.Header>Welcome</Dialog.Header>
+          <Dialog.Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+            vulputate libero et velit interdum, ac aliquet odio mattis. Class
+            aptent taciti sociosqu ad litora torquent per conubia nostra, per
+            inceptos himenaeos. Curabitur tempus urna at turpis condimentum
+            lobortis.
+          </Dialog.Body>
+          <Dialog.Footer>
+            <ButtonGroup>
+              <Dialog.Close asChild>
+                <Button intent="secondary" shouldFillContainer>
+                  Cancel
+                </Button>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <Button shouldFillContainer intent="primary-frida">
+                  Deactivate
+                </Button>
+              </Dialog.Close>
+            </ButtonGroup>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
 
       <SectionSpacer>
         <Stack
