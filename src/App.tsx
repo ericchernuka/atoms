@@ -8,6 +8,7 @@ import { ReactNode, useState } from "react";
 import { Button } from "./button/Button";
 import { ButtonGroup } from "./button/ButtonGroup";
 import { LoadingButton } from "./button/LoadingButton";
+import { CharacterCount } from "./character-count/CharacterCount";
 import * as CollapsiblePrimitive from "./collapsible/Collapsible";
 import { DateInput } from "./date-input/DateInput";
 import * as Dialog from "./dialog/Dialog";
@@ -22,9 +23,10 @@ import * as List from "./list/List";
 import { NumberInput } from "./number-input/NumberInput";
 import * as CardPrimitive from "./panels/Card";
 import * as CardList from "./panels/CardList";
-import { Stack } from "./stack/Stack";
+import { HStack, Stack } from "./stack/Stack";
 import { Text } from "./Text";
 import * as TextField from "./text-input/TextInput";
+import { TextArea } from "./textarea/TextArea";
 
 const SectionSpacer = (props: { children: ReactNode }) => (
   <div className="p-8 flex flex-col items-start space-y-2 w-full" {...props} />
@@ -45,6 +47,10 @@ function App() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState(-123.1231);
+  const [description, setDescription] = useState("");
+  const descriptionLimit = 20;
+  const isDescriptionInvalid = description.length > descriptionLimit;
+
   const RightIcon = showPassword ? EyeIcon : EyeSlashIcon;
 
   const [dobState, setDobState] = useState<string | undefined>("2026-02-01");
@@ -59,7 +65,6 @@ function App() {
           <Header>Form Controls</Header>
           <FormGrid columns={6}>
             <FormControl
-              isRequired={false}
               isInvalid={isInvalid}
               isDisabled={isDisabled}
               isReadOnly={isReadOnly}
@@ -71,7 +76,7 @@ function App() {
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
             <FormControl
-              isRequired
+              isRequired={false}
               isInvalid={isInvalid}
               isDisabled={isDisabled}
               isReadOnly={isReadOnly}
@@ -87,6 +92,34 @@ function App() {
               <FormHelperText>Enter your age</FormHelperText>
               <FormErrorMessage>Incorrect age.</FormErrorMessage>
             </FormControl>
+
+            <FormControl
+              isRequired={false}
+              isInvalid={isDescriptionInvalid}
+              isDisabled={isDisabled}
+              isReadOnly={isReadOnly}
+              className="sm:col-span-6"
+            >
+              <HStack justify="spaceBetween">
+                <FormLabel>Description</FormLabel>
+                <CharacterCount
+                  count={description.length}
+                  limit={descriptionLimit}
+                />
+              </HStack>
+              <TextArea
+                name="description"
+                rows={4}
+                value={description}
+                onChange={(val) => setDescription(val)}
+              />
+              <FormHelperText>Tell us about yourself</FormHelperText>
+              <FormErrorMessage>
+                Description exceeds maximum character limit of{" "}
+                {descriptionLimit}
+              </FormErrorMessage>
+            </FormControl>
+
             <FormControl
               isRequired={false}
               isInvalid={isInvalid}
@@ -95,11 +128,7 @@ function App() {
               className="sm:col-span-4"
             >
               <FormLabel>Date</FormLabel>
-              <DateInput
-                name="date"
-                defaultValue="2023-01-20"
-                onChange={(val) => console.log(val)}
-              />
+              <DateInput name="date" defaultValue="2023-01-20" />
               <FormHelperText>This is a helper text.</FormHelperText>
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
