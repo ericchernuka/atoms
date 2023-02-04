@@ -71,7 +71,7 @@ export const useFormControlContext = () => useContext(FormControlContext);
 function useFormControlProvider(props: FormControlContext) {
   const {
     id: idProp,
-    isRequired,
+    isRequired = true,
     isInvalid,
     isDisabled,
     isReadOnly,

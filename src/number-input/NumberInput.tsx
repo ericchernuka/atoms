@@ -1,20 +1,20 @@
-/* -------------------------------------------------------------------------------------------------
- * NumberInput
- * -----------------------------------------------------------------------------------------------*/
-
-import { ElementRef, ComponentPropsWithoutRef, forwardRef } from "react";
-import { useFormControlContext } from "../forms/FormControl";
-import { useFormControl } from "../forms/use-form-control";
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
+import { useFormControl, UseFormControlProps } from "../forms/use-form-control";
 import { Input } from "../input/Input";
 import { callAllHandlers } from "../shared-utils";
 import { useControllableState } from "../use-controllable-state";
 
+/* -------------------------------------------------------------------------------------------------
+ * NumberInput
+ * -----------------------------------------------------------------------------------------------*/
+
 type NumberInputElement = ElementRef<typeof Input>;
 interface NumberInputProps
   extends Omit<
-    ComponentPropsWithoutRef<"input">,
-    "className" | "value" | "type" | "value" | "onChange" | "defaultValue"
-  > {
+      ComponentPropsWithoutRef<"input">,
+      "className" | "value" | "type" | "onChange" | "defaultValue"
+    >,
+    UseFormControlProps<NumberInputElement> {
   onChange?: (number: number) => void;
   value?: number;
   defaultValue?: number;
@@ -32,7 +32,6 @@ const NumberInput = forwardRef<NumberInputElement, NumberInputProps>(
     },
     forwardedRef
   ) => {
-    const context = useFormControlContext();
     const field = useFormControl(props);
 
     const [value, setValue] = useControllableState<number>({
@@ -57,8 +56,6 @@ const NumberInput = forwardRef<NumberInputElement, NumberInputProps>(
         type="number"
         {...field}
         className="appearance-textfield"
-        disabled={context?.isDisabled}
-        hasErrors={context?.isInvalid}
         value={typeof value === "number" && isNaN(value) ? "" : value}
         onChange={handleChange}
         onBlur={callAllHandlers(props.onBlur, handleBlur)}

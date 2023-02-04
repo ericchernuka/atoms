@@ -7,8 +7,7 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
-import { useFormControlContext } from "../forms/FormControl";
-import { useFormControl } from "../forms/use-form-control";
+import { useFormControl, UseFormControlProps } from "../forms/use-form-control";
 import { Input } from "../input/Input";
 import { useControllableState } from "../use-controllable-state";
 
@@ -144,7 +143,8 @@ const TextFieldRoot = ({ children }: TextFieldRootProps) => {
 
 type TextInputElement = React.ElementRef<"input">;
 interface TextInputProps
-  extends Omit<React.ComponentPropsWithoutRef<"input">, "onChange"> {
+  extends Omit<React.ComponentPropsWithoutRef<"input">, "onChange">,
+    UseFormControlProps<TextInputElement> {
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
@@ -152,7 +152,6 @@ interface TextInputProps
 
 const TextInput = forwardRef<TextInputElement, TextInputProps>(
   ({ defaultValue, ...props }, forwardedRef) => {
-    const context = useFormControlContext();
     const field = useFormControl(props);
 
     const [value, setValue] = useControllableState({
@@ -165,8 +164,6 @@ const TextInput = forwardRef<TextInputElement, TextInputProps>(
       <Input
         type="text"
         {...field}
-        disabled={context?.isDisabled}
-        hasErrors={context?.isInvalid}
         onChange={(event) => setValue(event.target.value)}
         value={value}
         style={{

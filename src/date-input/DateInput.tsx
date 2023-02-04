@@ -1,21 +1,19 @@
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
+import { useFormControl, UseFormControlProps } from "../forms/use-form-control";
+import { Input } from "../input/Input";
+import { useControllableState } from "../use-controllable-state";
+
 /* -------------------------------------------------------------------------------------------------
  * DateInput
  * -----------------------------------------------------------------------------------------------*/
 
-import { parseISO } from "date-fns";
-import { ElementRef, ComponentPropsWithoutRef, forwardRef } from "react";
-import { useFormControlContext } from "../forms/FormControl";
-import { useFormControl } from "../forms/use-form-control";
-import { Input } from "../input/Input";
-import { callAllHandlers } from "../shared-utils";
-import { useControllableState } from "../use-controllable-state";
-
 type DateInputElement = ElementRef<typeof Input>;
 interface DateInputProps
   extends Omit<
-    ComponentPropsWithoutRef<"input">,
-    "className" | "value" | "type" | "value" | "onChange" | "defaultValue"
-  > {
+      ComponentPropsWithoutRef<"input">,
+      "className" | "value" | "type" | "onChange" | "defaultValue"
+    >,
+    UseFormControlProps<DateInputElement> {
   onChange?: (valueAsString: string) => void;
   value?: string;
   defaultValue?: string;
@@ -23,7 +21,6 @@ interface DateInputProps
 
 const DateInput = forwardRef<DateInputElement, DateInputProps>(
   ({ defaultValue, ...props }, forwardedRef) => {
-    const context = useFormControlContext();
     const field = useFormControl(props);
 
     const [value, setValue] = useControllableState({
@@ -37,8 +34,6 @@ const DateInput = forwardRef<DateInputElement, DateInputProps>(
         type="date"
         {...field}
         className="appearance-textfield"
-        disabled={context?.isDisabled}
-        hasErrors={context?.isInvalid}
         value={value}
         onChange={(event) => setValue(event.target.value)}
         ref={forwardedRef}

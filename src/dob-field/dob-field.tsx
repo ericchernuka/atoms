@@ -58,7 +58,6 @@ const DateOfBirthField = forwardRef<
       isValidISO8601Date(value || "") &&
       formattedDate !== value
     ) {
-      console.log("syncing local date");
       setLocalDate(value);
     }
   }, [localDate, value, focused]);
