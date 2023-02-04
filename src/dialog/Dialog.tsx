@@ -1,21 +1,19 @@
 import React, { Fragment } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import {
-  type DialogContentProps,
-  type DialogProps as DialogPrimitiveProps,
-} from "@radix-ui/react-dialog";
+import { type DialogContentProps } from "@radix-ui/react-dialog";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
 import { Button } from "../button/Button";
 import { ButtonGroup } from "../button/ButtonGroup";
 import { Text } from "../Text";
 import { HStack } from "../stack/Stack";
+import { useControllableState } from "../use-controllable-state";
 
 type DialogElement = React.ElementRef<typeof DialogPrimitive.Content>;
 interface DialogProps extends DialogContentProps {}
 
 const DialogContent = React.forwardRef<DialogElement, DialogProps>(
-  ({ children, title, ...props }, forwardedRef) => {
+  ({ children, ...props }, forwardedRef) => {
     const { open } = useInnerDialogContext();
 
     return (
@@ -66,7 +64,7 @@ const DialogContent = React.forwardRef<DialogElement, DialogProps>(
 
 const DialogHeader = ({ children }: DialogPrimitive.DialogTitleProps) => (
   <HStack justify="spaceBetween" align="center" asChild>
-    <div className="py-4 px-6 ">
+    <div className="py-4 px-6">
       <Text asChild size="lg" weight="semibold" truncate>
         <DialogPrimitive.Title>{children}</DialogPrimitive.Title>
       </Text>
@@ -98,11 +96,21 @@ const DialogDescription = (props: DialogPrimitive.DialogDescriptionProps) => (
 const DialogContext = React.createContext<{ open?: boolean }>({ open: false });
 const useInnerDialogContext = () => React.useContext(DialogContext);
 
-const Dialog = (props: DialogPrimitive.DialogProps) => {
+const Dialog = ({ children, ...props }: DialogPrimitive.DialogProps) => {
+  // allows for uncontrolled and controlled open state since we require it to perform
+  // the animation and mount the portal
+  const [open, setOpen] = useControllableState({
+    prop: props.open,
+    defaultProp: props.defaultOpen || false,
+    onChange: props.onOpenChange,
+  });
+
   return (
-    <DialogContext.Provider value={{ open: props.open }}>
-      <DialogPrimitive.Root {...props} />
-    </DialogContext.Provider>
+    <DialogPrimitive.Root {...props} open={open} onOpenChange={setOpen}>
+      <DialogContext.Provider value={{ open }}>
+        {children}
+      </DialogContext.Provider>
+    </DialogPrimitive.Root>
   );
 };
 const DialogTitle = DialogPrimitive.Title;
