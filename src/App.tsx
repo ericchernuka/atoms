@@ -144,7 +144,7 @@ function App() {
         <Header>Loading Button</Header>
         <LoadingButton
           intent="primary-freddie"
-          iconAfter={<ChevronDoubleRightIcon />}
+          icon={ChevronDoubleRightIcon}
           isLoading={loading}
           onClick={() => {
             setLoading(true);
@@ -163,37 +163,31 @@ function App() {
           onOpenChange={(open) => setIsDialogOpen(open)}
         >
           <Dialog.DialogTrigger asChild>
-            <LoadingButton
-              intent="primary-frida"
-              iconBefore={<LockClosedIcon />}
-              iconAfter={<ChevronDoubleRightIcon />}
-            >
+            <LoadingButton intent="primary-frida" icon={ChevronDoubleRightIcon}>
               Checkout
             </LoadingButton>
           </Dialog.DialogTrigger>
 
           <Dialog.Content>
             <Dialog.Header>Welcome</Dialog.Header>
-            <Dialog.Body>
+            <Dialog.Description>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
               vulputate libero et velit interdum, ac aliquet odio mattis. Class
               aptent taciti sociosqu ad litora torquent per conubia nostra, per
               inceptos himenaeos. Curabitur tempus urna at turpis condimentum
               lobortis.
-            </Dialog.Body>
+            </Dialog.Description>
             <Dialog.Footer>
-              <ButtonGroup>
-                <Dialog.Close asChild>
-                  <Button intent="secondary" shouldFillContainer>
-                    Cancel
-                  </Button>
-                </Dialog.Close>
-                <Dialog.Close asChild>
-                  <Button shouldFillContainer intent="primary-frida">
-                    Deactivate
-                  </Button>
-                </Dialog.Close>
-              </ButtonGroup>
+              <Dialog.Close asChild>
+                <Button intent="secondary" shouldFillContainer>
+                  Cancel
+                </Button>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <Button shouldFillContainer intent="primary-frida">
+                  Deactivate
+                </Button>
+              </Dialog.Close>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Root>

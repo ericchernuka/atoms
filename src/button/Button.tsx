@@ -11,9 +11,14 @@ import {
   forwardRef,
   ReactNode,
 } from "react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+
+type IconReference = typeof XMarkIcon;
 
 const buttonClasses = cva(
-  "inline-flex justify-center items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 gap-2 transition-all relative aria-[disabled=true]:opacity-75 aria-[disabled=true]:cursor-wait",
+  [
+    "inline-flex justify-center items-center rounded-md border border-transparent text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all relative aria-[disabled=true]:opacity-75 aria-[disabled=true]:cursor-wait",
+  ],
   {
     variants: {
       intent: {
@@ -22,6 +27,8 @@ const buttonClasses = cva(
         "primary-frida":
           "bg-[#7F6CD3] hover:bg-[#7F6CD3] focus:ring-[#8A78D7] text-white",
         secondary: "bg-white text-gray-800 border-gray-400 hover:bg-gray-100",
+        tertiary:
+          "bg-transparent hover:bg-gray-200 focus:ring-gray-300 text-gray-900",
       },
       size: {
         xs: "rounded px-2.5 py-1.5 text-xs shadow-sm",
@@ -46,8 +53,7 @@ interface ButtonProps
   extends ComponentPropsWithoutRef<"button">,
     VariantProps<typeof buttonClasses> {
   busy?: boolean;
-  iconBefore?: ReactNode;
-  iconAfter?: ReactNode;
+  icon?: IconReference;
   overlay?: ReactNode;
   shouldFillContainer?: boolean;
 }
@@ -55,14 +61,14 @@ interface ButtonProps
 const Button = forwardRef<ButtonElement, ButtonProps>(
   (
     {
-      iconBefore,
-      iconAfter,
+      icon: Icon,
       busy = false,
       className: _,
       children,
       disabled = false,
       overlay,
       shouldFillContainer,
+      type = "button",
       ...props
     },
     forwardedRef
@@ -72,7 +78,7 @@ const Button = forwardRef<ButtonElement, ButtonProps>(
 
     return (
       <button
-        type="button"
+        type={type}
         {...props}
         aria-disabled={isDisabled}
         data-has-overlay={hasOverlay ? true : undefined}
@@ -91,19 +97,16 @@ const Button = forwardRef<ButtonElement, ButtonProps>(
         }}
         ref={forwardedRef}
       >
-        {iconBefore ? (
-          <IconWrapper className={fadeClasses({ hasOverlay })}>
-            {iconBefore}
-          </IconWrapper>
-        ) : null}
         {children ? (
           <ContentWrapper className={fadeClasses({ hasOverlay })}>
             {children}
           </ContentWrapper>
         ) : null}
-        {iconAfter ? (
-          <IconWrapper className={fadeClasses({ hasOverlay })}>
-            {iconAfter}
+        {Icon ? (
+          <IconWrapper
+            className={clsx(fadeClasses({ hasOverlay }), children && "ml-2")}
+          >
+            <Icon className="w-full h-full" />
           </IconWrapper>
         ) : null}
         {overlay ? <OverlayWrapper>{overlay}</OverlayWrapper> : null}
@@ -125,10 +128,7 @@ const ContentWrapper = (props: ComponentProps<"span">) => (
 const IconWrapper = (props: ComponentProps<"span">) => (
   <span
     {...props}
-    className={clsx(
-      "h-4 w-4 flex-grow-0 flex-shrink-0 text-ellipsis whitespace-nowrap",
-      props.className
-    )}
+    className={clsx("h-4 w-4 flex-grow-0 flex-shrink-0", props.className)}
     aria-hidden="true"
   />
 );
