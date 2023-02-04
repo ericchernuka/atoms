@@ -6,6 +6,10 @@ import {
 } from "@radix-ui/react-dialog";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Transition } from "@headlessui/react";
+import { Button } from "../button/Button";
+import { ButtonGroup } from "../button/ButtonGroup";
+import { Text } from "../Text";
+import { HStack } from "../stack/Stack";
 
 type DialogElement = React.ElementRef<typeof DialogPrimitive.Content>;
 interface DialogProps extends DialogContentProps {}
@@ -28,7 +32,7 @@ const DialogContent = React.forwardRef<DialogElement, DialogProps>(
           >
             <DialogPrimitive.Overlay
               forceMount
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity grid place-items-center overflow-y-auto"
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity grid place-items-center overflow-y-auto backdrop-blur-xs"
             >
               <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 sm:m-4">
@@ -60,25 +64,35 @@ const DialogContent = React.forwardRef<DialogElement, DialogProps>(
   }
 );
 
-const DialogHeader = (props: DialogPrimitive.DialogTitleProps) => (
-  <div className="flex justify-between items-center gap-2 py-4 px-6">
-    <DialogPrimitive.Title className="text-lg" {...props} />
+const DialogHeader = ({ children }: DialogPrimitive.DialogTitleProps) => (
+  <HStack justify="spaceBetween" align="center" asChild>
+    <div className="py-4 px-6 ">
+      <Text asChild size="lg" weight="semibold" truncate>
+        <DialogPrimitive.Title>{children}</DialogPrimitive.Title>
+      </Text>
 
-    <DialogPrimitive.Close
-      aria-label="Close"
-      className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hidden sm:block h-6 w-6"
-    >
-      <XMarkIcon className="h-full w-full" />
-    </DialogPrimitive.Close>
-  </div>
+      <DialogPrimitive.Close asChild>
+        <Button
+          intent="tertiary"
+          size="xs"
+          icon={XMarkIcon}
+          aria-label="Close"
+        />
+      </DialogPrimitive.Close>
+    </div>
+  </HStack>
 );
 
 const DialogBody = (props: { children: React.ReactNode }) => (
   <div className="py-4 px-6 overflow-y-auto" {...props} />
 );
 
-const DialogFooter = (props: { children: React.ReactNode }) => (
-  <div className="py-4 px-6" {...props} />
+const DialogFooter = ({ children }: { children: React.ReactNode }) => (
+  <ButtonGroup className="py-4 px-6">{children}</ButtonGroup>
+);
+
+const DialogDescription = (props: DialogPrimitive.DialogDescriptionProps) => (
+  <DialogPrimitive.Description className="py-4 px-6" {...props} />
 );
 
 const DialogContext = React.createContext<{ open?: boolean }>({ open: false });
@@ -93,7 +107,6 @@ const Dialog = (props: DialogPrimitive.DialogProps) => {
 };
 const DialogTitle = DialogPrimitive.Title;
 const DialogTrigger = DialogPrimitive.Trigger;
-const DialogDescription = DialogPrimitive.Description;
 const DialogClose = DialogPrimitive.Close;
 
 export {
