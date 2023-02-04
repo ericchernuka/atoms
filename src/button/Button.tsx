@@ -62,6 +62,7 @@ const Button = forwardRef<ButtonElement, ButtonProps>(
       children,
       disabled = false,
       overlay,
+      shouldFillContainer,
       ...props
     },
     forwardedRef
@@ -75,7 +76,7 @@ const Button = forwardRef<ButtonElement, ButtonProps>(
         {...props}
         aria-disabled={isDisabled}
         data-has-overlay={hasOverlay ? true : undefined}
-        className={buttonClasses(props)}
+        className={buttonClasses({ shouldFillContainer, ...props })}
         onClick={(event) => {
           const ariaDisabled =
             event.currentTarget.getAttribute("aria-disabled");
