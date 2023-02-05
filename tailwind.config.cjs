@@ -1,5 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 const { stackPlugin } = require("./src/stack/stack.plugin.cjs");
+const brandsPlugin = require("./plugin/brand-plugin.cjs");
+const brands = require("./plugin/brands.json");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -19,26 +21,10 @@ module.exports = {
     },
   },
   plugins: [
+    brandsPlugin({ colorThemes: brands }),
     require("@tailwindcss/forms"),
     require("tailwindcss-radix"),
     require("tailwindcss-animate"),
-    // function ({ addBase, theme }) {
-    //   const spacings = theme("spacing");
-    //   const spacingProperties = Object.keys(spacings).reduce(
-    //     (vars, spacingKey) => {
-    //       const value = spacings[spacingKey];
-    //       const newVars = {
-    //         [`--spacing-${spacingKey.replace(".", "-")}`]: value,
-    //       };
-
-    //       return { ...vars, ...newVars };
-    //     },
-    //     {}
-    //   );
-    //   addBase({
-    //     ":root": spacingProperties,
-    //   });
-    // },
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
         {

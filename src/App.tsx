@@ -10,6 +10,7 @@ import { LoadingButton } from "./button/LoadingButton";
 import { CharacterCount } from "./character-count/CharacterCount";
 import * as CollapsiblePrimitive from "./collapsible/Collapsible";
 import { DateInput } from "./date-input/DateInput";
+import { Brand } from "./design-system/types";
 import * as Dialog from "./dialog/Dialog";
 import { DateOfBirthField } from "./dob-field/dob-field";
 import { FormControl } from "./forms/FormControl";
@@ -56,6 +57,7 @@ const Header = ({
 function App() {
   const [showPassword, setShowPassword] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [brand, setBrand] = useState<Brand>("freddie");
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState(-123.1231);
   const [description, setDescription] = useState("");
@@ -70,7 +72,14 @@ function App() {
   const isReadOnly = false;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" data-brand={brand}>
+      <div className="sticky top-0 z-50 bg-white p-4">
+        <select onChange={(e) => setBrand(e.target.value as Brand)}>
+          <option value="freddie">Freddie</option>
+          <option value="frida">Frida</option>
+        </select>
+      </div>
+
       <SectionSpacer>
         <Stack direction="column" shouldFillContainer>
           <Header>Form Controls</Header>
@@ -183,7 +192,7 @@ function App() {
       <SectionSpacer>
         <Header>Loading Button</Header>
         <LoadingButton
-          intent="primary-freddie"
+          intent="primary"
           icon={ChevronDoubleRightIcon}
           isLoading={loading}
           onClick={() => {
@@ -203,7 +212,7 @@ function App() {
           onOpenChange={(open) => setIsDialogOpen(open)}
         >
           <Dialog.DialogTrigger asChild>
-            <LoadingButton intent="primary-frida" icon={ChevronDoubleRightIcon}>
+            <LoadingButton intent="primary" icon={ChevronDoubleRightIcon}>
               Checkout
             </LoadingButton>
           </Dialog.DialogTrigger>
@@ -224,7 +233,7 @@ function App() {
                 </Button>
               </Dialog.Close>
               <Dialog.Close asChild>
-                <Button shouldFillContainer intent="primary-frida">
+                <Button shouldFillContainer intent="primary">
                   Deactivate
                 </Button>
               </Dialog.Close>
@@ -242,7 +251,7 @@ function App() {
         >
           <div className="bg-slate-200">
             <Button>Click</Button>
-            <Button intent="primary-frida">Me</Button>
+            <Button intent="primary">Me</Button>
             <Button intent="secondary">Or Me?</Button>
           </div>
         </Stack>
@@ -252,7 +261,7 @@ function App() {
         <Header>Collapsible</Header>
         <CollapsiblePrimitive.Root>
           <CollapsiblePrimitive.Trigger asChild>
-            <Button intent="primary-frida">Expand me</Button>
+            <Button intent="primary">Expand me</Button>
           </CollapsiblePrimitive.Trigger>
 
           <CollapsiblePrimitive.Content>

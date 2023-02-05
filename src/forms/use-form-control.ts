@@ -1,4 +1,4 @@
-import { ariaAttr, callAllHandlers } from "../shared-utils";
+import { ariaAttr } from "../shared-utils";
 import { FormControlOptions, useFormControlContext } from "./FormControl";
 
 export interface UseFormControlProps<T extends HTMLElement>

@@ -1,0 +1,18 @@
+{
+  "base": {
+    "focused": "rgb(69, 143, 255)",
+    "action-primary": "rgb(122, 122, 122)",
+    "action-primary-hovered": "rgb(85, 85, 85)",
+    "action-primary-pressed": "rgb(40, 40, 40)"
+  },
+  "freddie": {
+    "action-primary": "rgb(0, 128, 96)",
+    "action-primary-hovered": "rgb(10, 104, 88)",
+    "action-primary-pressed": "rgb(5, 102, 86)"
+  },
+  "frida": {
+    "action-primary": "rgb(127, 108, 211)",
+    "action-primary-hovered": "rgb(118, 98, 206)",
+    "action-primary-pressed": "rgb(105, 82, 209)"
+  }
+}
