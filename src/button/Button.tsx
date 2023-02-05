@@ -17,16 +17,16 @@ type IconReference = typeof XMarkIcon;
 
 const buttonClasses = cva(
   [
-    "inline-flex justify-center items-center rounded-md border border-transparent text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300 relative aria-[disabled=true]:opacity-75 aria-[disabled=true]:cursor-wait",
+    "inline-flex justify-center items-center rounded-md border border-transparent text-sm font-medium shadow-sm transition-all duration-300 relative",
+    "focus:ring-focused focus:outline-none focus:ring-2 focus:ring-offset-2",
+    "aria-[disabled=true]:opacity-75 aria-[disabled=true]:cursor-wait",
   ],
   {
     variants: {
       intent: {
-        primary:
-          "bg-action-primary hover:bg-action-primary-hovered focus:ring-focused text-white",
+        primary: "bg-action-primary hover:bg-action-primary-hovered text-white",
         secondary: "bg-white text-gray-800 border-gray-400 hover:bg-gray-100",
-        tertiary:
-          "bg-transparent hover:bg-gray-200 focus:ring-focused text-gray-900",
+        tertiary: "bg-transparent hover:bg-gray-200 text-gray-900",
       },
       size: {
         xs: "rounded px-2.5 py-1.5 text-xs shadow-sm",

@@ -107,7 +107,7 @@ const DateOfBirthField = forwardRef<
             value={monthPart}
             onChange={handleMonthChange}
             className={clsx(
-              "relative px-2 var-spacing-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm truncate",
+              "relative px-2 var-spacing-2 w-full rounded-md focus:outline-none border-gray-300 shadow-sm focus:border-focused focus:ring-focused sm:text-sm truncate",
               "form-select",
               !isValidLocalDate && "border-red-400"
             )}

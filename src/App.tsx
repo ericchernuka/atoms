@@ -23,6 +23,7 @@ import * as List from "./list/List";
 import { NumberInput } from "./number-input/NumberInput";
 import * as CardPrimitive from "./panels/Card";
 import * as CardList from "./panels/CardList";
+import { inputClasses } from "./shared-utils/design";
 import { HStack, Stack } from "./stack/Stack";
 import { Text } from "./Text";
 import * as TextField from "./text-input/TextInput";
@@ -80,7 +81,12 @@ function App() {
   return (
     <div className="space-y-8">
       <div className="sticky top-0 z-50 bg-white p-4">
-        <select onChange={(e) => setBrand(e.target.value as Brand)}>
+        <select
+          className={inputClasses("form-select max-w-md", {
+            includeReadOnly: false,
+          })}
+          onChange={(e) => setBrand(e.target.value as Brand)}
+        >
           {BRANDS.map((brand) => (
             <option key={brand} value={brand}>
               {brand}
