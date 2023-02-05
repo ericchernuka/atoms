@@ -1,4 +1,4 @@
-export type Brand = "freddie" | "frida";
+export type Brand = "freddie" | "frida" | "purposemed";
 
 export interface MetadataProperties {
   description?: string;

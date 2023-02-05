@@ -11,6 +11,8 @@ const getRgbChannels = (rgbString) => {
   return `${r} ${g} ${b}`;
 };
 
+const buildCssVariableName = (path) => `--pm-${path.join("-")}`;
+
 // Generate CSS variables
 function getCssVariableDeclarations(input, path = [], output = {}) {
   Object.entries(input).forEach(([key, value]) => {
@@ -18,7 +20,7 @@ function getCssVariableDeclarations(input, path = [], output = {}) {
     if (typeof value !== "string") {
       getCssVariableDeclarations(value, newPath, output);
     } else {
-      output[`--${newPath.join("-")}`] = getRgbChannels(value);
+      output[buildCssVariableName(newPath)] = getRgbChannels(value);
     }
   });
   return output;
@@ -35,7 +37,10 @@ function getColorUtilitiesWithCssVariableReferences(input, path = []) {
           getColorUtilitiesWithCssVariableReferences(value, newPath),
         ];
       } else {
-        return [key, `rgb(var(--${newPath.join("-")}) / <alpha-value>)`];
+        return [
+          key,
+          `rgb(var(${buildCssVariableName(newPath)}) / <alpha-value>)`,
+        ];
       }
     })
   );
@@ -60,8 +65,6 @@ module.exports = plugin.withOptions(
   function (options) {
     const { colorThemes } = options;
     checkForValidColorThemesInput(colorThemes);
-
-    const [baseTheme] = Object.values(colorThemes);
 
     return function ({ addBase }) {
       Object.entries(colorThemes).forEach(([key, value], index) => {

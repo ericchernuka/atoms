@@ -4,7 +4,7 @@ import {
   EyeSlashIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Button } from "./button/Button";
 import { LoadingButton } from "./button/LoadingButton";
 import { CharacterCount } from "./character-count/CharacterCount";
@@ -54,10 +54,12 @@ const Header = ({
   );
 };
 
+const BRANDS: Brand[] = ["freddie", "frida", "purposemed"];
+
 function App() {
   const [showPassword, setShowPassword] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [brand, setBrand] = useState<Brand>("freddie");
+  const [brand, setBrand] = useState<Brand>(BRANDS[0]);
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState(-123.1231);
   const [description, setDescription] = useState("");
@@ -71,12 +73,19 @@ function App() {
   const isDisabled = false;
   const isReadOnly = false;
 
+  useEffect(() => {
+    document.body.setAttribute("data-brand", brand);
+  }, [brand]);
+
   return (
-    <div className="space-y-8" data-brand={brand}>
+    <div className="space-y-8">
       <div className="sticky top-0 z-50 bg-white p-4">
         <select onChange={(e) => setBrand(e.target.value as Brand)}>
-          <option value="freddie">Freddie</option>
-          <option value="frida">Frida</option>
+          {BRANDS.map((brand) => (
+            <option key={brand} value={brand}>
+              {brand}
+            </option>
+          ))}
         </select>
       </div>
 
