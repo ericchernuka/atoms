@@ -46,8 +46,8 @@ export function useFormControlProps<T extends HTMLElement>(
 
   const { id, disabled, readOnly, required, isInvalid, ...rest } = props;
 
-  const labelIds: string[] = props["aria-describedby"]
-    ? [props["aria-describedby"]]
+  const labelIds: string[] = rest["aria-describedby"]
+    ? [rest["aria-describedby"]]
     : [];
 
   // Error message must be described first in all scenarios.

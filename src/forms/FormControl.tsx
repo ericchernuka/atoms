@@ -50,9 +50,9 @@ interface FormControlContext extends FormControlOptions {
   /**
    * The custom `id` to use for the form control. This is passed directly to the form element (e.g, Input).
    * - The form element (e.g. Input) gets the `id`
-   * - The form label id: `form-label-${id}`
-   * - The form error text id: `form-error-text-${id}`
-   * - The form helper text id: `form-helper-text-${id}`
+   * - The form label id: `${id}-label`
+   * - The form error text id: `${id}-feedback`
+   * - The form helper text id: `${id}-helperText`
    */
   id?: string;
 }
@@ -68,23 +68,26 @@ const FormControlContext = createContext<FormControlProviderContext | null>(
 
 export const useFormControlContext = () => useContext(FormControlContext);
 
-function useFormControlProvider(props: FormControlContext) {
-  const {
-    id: idProp,
-    required = true,
-    isInvalid,
-    disabled,
-    readOnly,
-    ...htmlProps
-  } = props;
+export const buildAccessibleIds = (id: string, prefixFallback?: boolean) => {
+  const idValue = prefixFallback ? `field-${id}` : id;
+
+  return {
+    id: idValue,
+    labelId: `${idValue}-label`,
+    feedbackId: `${idValue}-feedback`,
+    helpTextId: `${idValue}-helperText`,
+  };
+};
+
+const useFormControlProvider = (props: FormControlContext) => {
+  const { id: idProp, required = true, isInvalid, disabled, readOnly } = props;
 
   // Generate all the required ids
   const uuid = useId();
-  const id = idProp || `field-${uuid}`;
-
-  const labelId = `${id}-label`;
-  const feedbackId = `${id}-feedback`;
-  const helpTextId = `${id}-helpText`;
+  const { id, feedbackId, helpTextId, labelId } = buildAccessibleIds(
+    idProp ?? uuid,
+    Boolean(idProp)
+  );
 
   /**
    * Track whether the `FormErrorMessage` has been rendered.
@@ -93,7 +96,7 @@ function useFormControlProvider(props: FormControlContext) {
   const [hasFeedbackText, setHasFeedbackText] = useState(false);
 
   /**
-   * Track whether the `FormHelperText` has been rendered.
+   * Track whether the `FormHelpText` has been rendered.
    * We use this to append its id the `aria-describedby` of the `input`.
    */
   const [hasHelpText, setHasHelpText] = useState(false);
@@ -144,27 +147,6 @@ function useFormControlProvider(props: FormControlContext) {
     [feedbackId]
   );
 
-  const getRootProps = useCallback<PropGetter>(
-    (props = {}, forwardedRef = null) => ({
-      ...props,
-      ...htmlProps,
-      ref: forwardedRef,
-      role: "group",
-    }),
-    [htmlProps]
-  );
-
-  const getRequiredIndicatorProps = useCallback<PropGetter>(
-    (props = {}, forwardedRef = null) => ({
-      ...props,
-      ref: forwardedRef,
-      role: "presentation",
-      "aria-hidden": true,
-      children: props.children || "*",
-    }),
-    []
-  );
-
   return {
     required: !!required,
     isInvalid: !!isInvalid,
@@ -178,14 +160,11 @@ function useFormControlProvider(props: FormControlContext) {
     labelId,
     feedbackId,
     helpTextId,
-    htmlProps,
     getHelpTextProps,
     getErrorMessageProps,
-    getRootProps,
     getLabelProps,
-    getRequiredIndicatorProps,
   };
-}
+};
 
 type FormControlElement = ElementRef<"div">;
 
@@ -200,22 +179,18 @@ export interface FormControlProps
  * This is commonly used in form elements such as `input`,
  * `select`, `textarea`, etc.
  *
- * @see Docs https://chakra-ui.com/docs/components/form-control
  */
 
 export const FormControl = forwardRef<FormControlElement, FormControlProps>(
-  function FormControl(props, ref) {
-    const {
-      getRootProps,
-      htmlProps: _,
-      ...context
-    } = useFormControlProvider(props);
+  function FormControl(props, forwardedRef) {
+    const context = useFormControlProvider(props);
 
     return (
       <FormControlContext.Provider value={context}>
         <div
-          {...getRootProps({}, ref)}
+          role="group"
           className={clsx("space-y-1", props.className)}
+          ref={forwardedRef}
         />
       </FormControlContext.Provider>
     );
