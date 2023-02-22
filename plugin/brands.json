@@ -3,7 +3,8 @@
     "focused": "rgb(69, 143, 255)",
     "action-primary": "rgb(21, 27, 255)",
     "action-primary-hovered": "rgb(81, 86, 255)",
-    "action-primary-pressed": "rgb(81, 86, 255)"
+    "action-primary-pressed": "rgb(81, 86, 255)",
+    "critical-dark": "rgb(128, 0, 0)"
   },
   "freddie": {
     "focused": "rgb(0, 128, 96)",

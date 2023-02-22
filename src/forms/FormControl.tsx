@@ -58,7 +58,7 @@ interface FormControlContext extends FormControlOptions {
 }
 
 type FormControlProviderContext = Omit<
-  ReturnType<typeof useFormControlProvider>,
+  ReturnType<typeof useFormControlProviderProps>,
   "getRootProps" | "htmlProps"
 >;
 
@@ -79,14 +79,14 @@ export const buildAccessibleIds = (id: string, prefixFallback?: boolean) => {
   };
 };
 
-const useFormControlProvider = (props: FormControlContext) => {
+const useFormControlProviderProps = (props: FormControlContext) => {
   const { id: idProp, required = true, isInvalid, disabled, readOnly } = props;
 
   // Generate all the required ids
   const uuid = useId();
   const { id, feedbackId, helpTextId, labelId } = buildAccessibleIds(
     idProp ?? uuid,
-    Boolean(idProp)
+    !Boolean(idProp)
   );
 
   /**
@@ -183,7 +183,7 @@ export interface FormControlProps
 
 export const FormControl = forwardRef<FormControlElement, FormControlProps>(
   function FormControl(props, forwardedRef) {
-    const context = useFormControlProvider(props);
+    const context = useFormControlProviderProps(props);
 
     return (
       <FormControlContext.Provider value={context}>
@@ -191,7 +191,9 @@ export const FormControl = forwardRef<FormControlElement, FormControlProps>(
           role="group"
           className={clsx("space-y-1", props.className)}
           ref={forwardedRef}
-        />
+        >
+          {props.children}
+        </div>
       </FormControlContext.Provider>
     );
   }
