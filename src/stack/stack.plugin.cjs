@@ -9,22 +9,23 @@ module.exports = {
       [`.${PLUGIN_NAME}`]: {
         [PLUGIN_CSS_VARIABLE_NAME]: theme("spacing.4"),
         display: "flex",
-        "margin-top": 0,
-        "margin-inline-end": 0,
-        "margin-bottom": 0,
-        "margin-inline-start": 0,
+        gap: 0,
       },
-      [`.${PLUGIN_NAME}-col > * ~ *`]: {
-        "margin-top": `var(${PLUGIN_CSS_VARIABLE_NAME})`,
+      [`.${PLUGIN_NAME}-col`]: {
+        "flex-direction": "column",
+        gap: `var(${PLUGIN_CSS_VARIABLE_NAME})`,
       },
-      [`.${PLUGIN_NAME}-col-reverse > * ~ *`]: {
-        "margin-bottom": `var(${PLUGIN_CSS_VARIABLE_NAME})`,
+      [`.${PLUGIN_NAME}-col-reverse`]: {
+        "flex-direction": "column-reverse",
+        gap: `var(${PLUGIN_CSS_VARIABLE_NAME})`,
       },
-      [`.${PLUGIN_NAME}-row > * ~ *`]: {
-        "margin-inline-start": `var(${PLUGIN_CSS_VARIABLE_NAME})`,
+      [`.${PLUGIN_NAME}-row`]: {
+        "flex-direction": "row",
+        gap: `var(${PLUGIN_CSS_VARIABLE_NAME})`,
       },
-      [`.${PLUGIN_NAME}-row-reverse > * ~ *`]: {
-        "margin-inline-end": `var(${PLUGIN_CSS_VARIABLE_NAME})`,
+      [`.${PLUGIN_NAME}-row-reverse`]: {
+        "flex-direction": "row-reverse",
+        gap: `var(${PLUGIN_CSS_VARIABLE_NAME})`,
       },
     });
 

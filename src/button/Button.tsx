@@ -20,6 +20,7 @@ const buttonClasses = cva(
     "inline-flex justify-center items-center rounded-md border border-transparent text-sm font-medium shadow-sm transition-all duration-300 relative",
     "focus:ring-focused focus:outline-none focus:ring-2 focus:ring-offset-2",
     "aria-[disabled=true]:opacity-75 aria-[disabled=true]:cursor-wait",
+    "group-data-[fill-space='true']:flex-1 sm:group-data-[fill-space]:flex-initial",
   ],
   {
     variants: {

@@ -106,8 +106,8 @@ function App() {
               className="sm:col-span-2"
             >
               <FormLabel>First Name</FormLabel>
-              <TextField.Input name="firstName" placeholder="asdsadfs" />
               <FormHelperText>This is a helper text.</FormHelperText>
+              <TextField.Input name="firstName" placeholder="asdsadfs" />
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
             <FormControl
@@ -124,7 +124,6 @@ function App() {
                 max={666}
                 onChange={(val) => setNumber(val)}
               />
-              <FormHelperText>Enter your age</FormHelperText>
               <FormErrorMessage>Incorrect age.</FormErrorMessage>
             </FormControl>
 
@@ -142,13 +141,13 @@ function App() {
                   limit={descriptionLimit}
                 />
               </HStack>
+              <FormHelperText>Tell us about yourself</FormHelperText>
               <TextArea
                 name="description"
                 rows={4}
                 value={description}
                 onChange={(val) => setDescription(val)}
               />
-              <FormHelperText>Tell us about yourself</FormHelperText>
               <FormErrorMessage>
                 Description exceeds maximum character limit of{" "}
                 {descriptionLimit}
@@ -163,8 +162,8 @@ function App() {
               className="sm:col-span-4"
             >
               <FormLabel>Date</FormLabel>
-              <DateInput name="date" defaultValue="2023-01-20" />
               <FormHelperText>This is a helper text.</FormHelperText>
+              <DateInput name="date" defaultValue="2023-01-20" />
               <FormErrorMessage>This is an error message.</FormErrorMessage>
             </FormControl>
           </FormGrid>
@@ -257,6 +256,7 @@ function App() {
         </Dialog.Root>
       </SectionSpacer>
       <SectionSpacer>
+        <Header>Stack</Header>
         <Stack
           direction="row"
           spacing="extraLoose"
@@ -264,7 +264,7 @@ function App() {
           shouldFillContainer
           asChild
         >
-          <div className="bg-slate-200">
+          <div className="bg-slate-200 p-2">
             <Button>Click</Button>
             <Button intent="primary">Me</Button>
             <Button intent="secondary">Or Me?</Button>

@@ -5,13 +5,21 @@ import { ElementRef, forwardRef, ReactNode } from "react";
 /* -------------------------------------------------------------------------------------------------
  * Stack
  * -----------------------------------------------------------------------------------------------*/
-const stackClasses = cva("stack", {
+const stackClasses = cva("stack group", {
   variants: {
     direction: {
       row: "stack-row",
-      rowReverse: "flex-row-reverse stack-row-reverse",
-      column: "flex-col stack-col",
-      columnReverse: "flex-col-reverse stack-col-reverse",
+      rowReverse: "stack-row-reverse",
+      column: "stack-col",
+      columnReverse: "stack-col-reverse",
+    },
+    spacing: {
+      none: "stack-space-0",
+      extraTight: "stack-space-1",
+      tight: "stack-space-2",
+      base: "stack-space-4",
+      loose: "stack-space-6",
+      extraLoose: "stack-space-8",
     },
     align: {
       stretch: "items-stretch",
@@ -29,17 +37,9 @@ const stackClasses = cva("stack", {
       spaceEvenly: "justify-evenly",
     },
     wrap: {
-      noWrap: "nowrap",
-      wrap: "wrap",
-      reverse: "wrap-reverse",
-    },
-    spacing: {
-      none: "stack-space-0",
-      extraTight: "stack-space-1",
-      tight: "stack-space-2",
-      base: "stack-space-4",
-      loose: "stack-space-6",
-      extraLoose: "stack-space-8",
+      noWrap: "flex-nowrap",
+      wrap: "flex-wrap",
+      reverse: "flex-wrap-reverse",
     },
     shouldFillContainer: {
       true: "w-full",
