@@ -1,6 +1,5 @@
 const plugin = require("tailwindcss/plugin");
 const { stackPlugin } = require("./src/stack/stack.plugin.cjs");
-const brandsPlugin = require("./plugin/brand-plugin.cjs");
 const brands = require("./plugin/brands.json");
 
 /** @type {import('tailwindcss').Config} */
@@ -21,7 +20,9 @@ module.exports = {
     },
   },
   plugins: [
-    brandsPlugin({ colorThemes: brands }),
+    require("./plugin/brand-plugin.cjs")({
+      colorThemes: brands,
+    }),
     require("@tailwindcss/forms"),
     require("tailwindcss-radix"),
     require("tailwindcss-animate"),
