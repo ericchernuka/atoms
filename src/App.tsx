@@ -259,15 +259,28 @@ function App() {
         <Header>Stack</Header>
         <Stack
           direction="row"
-          spacing="extraLoose"
+          spacing="tight"
           justify="spaceBetween"
+          align="center"
           shouldFillContainer
           asChild
         >
           <div className="bg-slate-200 p-2">
             <Button>Click</Button>
             <Button intent="primary">Me</Button>
-            <Button intent="secondary">Or Me?</Button>
+            <Stack
+              direction="column"
+              spacing="extraLoose"
+              justify="spaceBetween"
+              // shouldFillContainer
+              asChild
+            >
+              <div className="bg-slate-200 p-2">
+                <Button>Click</Button>
+                <Button intent="primary">Me</Button>
+                <Button intent="secondary">Or Me?</Button>
+              </div>
+            </Stack>
           </div>
         </Stack>
       </SectionSpacer>
